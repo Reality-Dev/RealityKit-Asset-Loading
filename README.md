@@ -38,11 +38,11 @@ See these documentation articles for more information:
 
 Add the URL of this repository to your Xcode 11+ Project under:
     File > swift packages > add package dependency
-    `https://github.com/Reality-Dev/RKAssetLoading`
+    `https://github.com/Reality-Dev/RealityKit-Asset-Loading`
 
 ## Usage
 
-Add `import AssetLoading` to the top of your swift file to start.
+Add `import RKAssetLoading` to the top of your swift file to start.
 
 
 
