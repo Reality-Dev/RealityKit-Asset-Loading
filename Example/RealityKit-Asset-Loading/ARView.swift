@@ -30,8 +30,8 @@ class ARSUIView: ARView {
 //        loadOneModelEntity()
 //        loadBodyTrackedEntity()
 //        loadMultipleEntitiesAtOnceWithFileNames()
-        loadMultipleEntitiesAtOnceWithURLs()
-//        loadRocketFromRealityFile()
+//        loadMultipleEntitiesAtOnceWithURLs()
+        loadRocketFromRealityFile()
 //        loadRocketFromRealityComposerProject()
     }
     
@@ -55,6 +55,8 @@ class ARSUIView: ARView {
                     self?.scene.addAnchor(scene)
                 }
         }
+        
+        enableOcclusion()
     }
     
     
@@ -91,6 +93,21 @@ class ARSUIView: ARView {
                 self?.scene.addAnchor(scene)
 //                self?.sceneDidLoad()
             }
+        }
+        
+       enableOcclusion()
+    }
+    
+    func enableOcclusion(){
+        //Enable occlusion
+        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
+            let config = ARWorldTrackingConfiguration()
+            config.environmentTexturing = .automatic
+            config.sceneReconstruction = .mesh
+            config.planeDetection = .horizontal
+            self.session.run(config)
+            //--//
+            self.environment.sceneUnderstanding.options.insert(.occlusion)
         }
     }
     
@@ -165,14 +182,20 @@ class ARSUIView: ARView {
                 
                 //Usdz animation
                 if index == 2 { //Biplane
-                    if #available(iOS 15.0, *) {
-                        entity.playFirstAnimation()
-                        entity.scale = .init(repeating: 0.04)
-                    }
-                    //Another option:
-                    //entity.playAnimation(entity.availableAnimations()?.first)
+                    self?.makePlaneFly(entity)
                 }
         }}}
+    
+    
+    //Usdz animation
+    func makePlaneFly(_ plane: Entity){
+        if #available(iOS 15.0, *) {
+            plane.playFirstAnimation()
+            plane.scale = .init(repeating: 0.04)
+        }
+        //Another option:
+        //plane.playAnimation(plane.availableAnimations()?.first)
+    }
     
 
     func loadMultipleEntitiesAtOnceWithURLs(){
@@ -201,14 +224,7 @@ class ARSUIView: ARView {
                 
                 //Usdz animation
                 if index == 2 { //Biplane
-                    if #available(iOS 15.0, *) {
-                        entity.playFirstAnimation()
-                        entity.scale = .init(repeating: 0.04)
-                    }
-                    //Another option:
-                    //entity.playAnimation(entity.availableAnimations()?.first)
+                    self?.makePlaneFly(entity)
                 }
             }
-        }
-    }
-}
+        }}}
