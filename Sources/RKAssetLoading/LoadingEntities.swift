@@ -9,10 +9,6 @@ import RealityKit
 import Combine
 import Foundation
 
-//.reality, .rcproject, Entity, ModelEntity, BodyTrackedEntity
-//AUDIO, Animations, etc.
-//With URL and with name.
-//One entity or multiple.
 
 public struct RKAssetLoader {
 
