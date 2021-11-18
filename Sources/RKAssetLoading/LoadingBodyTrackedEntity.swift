@@ -20,18 +20,11 @@ public extension RKAssetLoader {
     ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
     static func loadBodyTrackedEntityAsync(named name: String, completionHandler: @escaping ((_ character: BodyTrackedEntity) -> Void)){
         DispatchQueue.main.async {
-        var myCancellable: AnyCancellable? = nil
-        myCancellable = Entity.loadBodyTrackedAsync(named: name).sink(
-            receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    print("Error: Unable to load model: \(error.localizedDescription)")
-                }
-                myCancellable?.cancel()
-        },
+
+        Entity.loadBodyTrackedAsync(named: name).sink(
             receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
-                myCancellable?.cancel()
-            })
+            }).store(in: &CancellablesHolder.cancellables)
         }}
     
 
@@ -46,19 +39,10 @@ public extension RKAssetLoader {
             return
         }
         DispatchQueue.main.async {
-        var myCancellable: AnyCancellable? = nil
-        myCancellable = Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
-            .sink(
-            receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    print("Error: Unable to load model: \(error.localizedDescription)")
-                }
-                myCancellable?.cancel()
-        },
-            receiveValue: { bodyTrackedEntity in
+        Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
+            .sink(receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
-                myCancellable?.cancel()
-            })
+            }).store(in: &CancellablesHolder.cancellables)
     }}
     
 }

@@ -23,22 +23,15 @@ public extension RKAssetLoader {
             print("No file exists at path \(path)")
             return
         }
-        var cancellable: AnyCancellable? = nil
-        cancellable = Entity.loadModelAsync(contentsOf: path, withName: name)
+         
+        Entity.loadModelAsync(contentsOf: path, withName: name)
         
-        //There was an error loading the model.
-            .sink(receiveCompletion: { error in
-                print("Unable to load the model")
-                if let error = error as? Error {
-                    print(error.localizedDescription)
-                }
-                cancellable?.cancel()
-        //The model loaded successfully.
-            }, receiveValue: { (loadedModelEntity: ModelEntity) in
+            .sink(receiveValue: { (loadedModelEntity: ModelEntity) in
+                //The model loaded successfully.
                 //Now we can make use of it.
                 completion(loadedModelEntity)
-                cancellable?.cancel()
-            })
+                 
+            }).store(in: &CancellablesHolder.cancellables)
         }
     }
     
@@ -52,22 +45,14 @@ public extension RKAssetLoader {
     static func loadModelEntityAsync(named name: String, in bundle: Bundle? = nil, completion: @escaping ((ModelEntity) -> Void)){
             DispatchQueue.main.async {
 
-            var cancellable: AnyCancellable? = nil
-            cancellable = Entity.loadModelAsync(named: name, in: bundle)
-            
-            //There was an error loading the model.
-                .sink(receiveCompletion: { error in
-                    print("Unable to load the model")
-                    if let error = error as? Error {
-                        print(error.localizedDescription)
-                    }
-                    cancellable?.cancel()
-            //The model loaded successfully.
-                }, receiveValue: { (loadedModelEntity: ModelEntity) in
+            Entity.loadModelAsync(named: name, in: bundle)
+
+                .sink(receiveValue: { (loadedModelEntity: ModelEntity) in
+                    //The model loaded successfully.
                     //Now we can make use of it.
                     completion(loadedModelEntity)
-                    cancellable?.cancel()
-                })
+                     
+                }).store(in: &CancellablesHolder.cancellables)
             }
     }
     
@@ -91,7 +76,7 @@ public extension RKAssetLoader {
             return
         }
         DispatchQueue.main.async {
-            var cancellable: AnyCancellable? = nil
+             
             var anyPublisher: AnyPublisher<ModelEntity, Error>? = nil
             let firstPublisher = Entity.loadModelAsync(contentsOf: firstModelEntity.path, withName: firstModelEntity.name)
             for i in 1..<entities.count {
@@ -117,21 +102,14 @@ public extension RKAssetLoader {
                 }
 
             }
-            cancellable = anyPublisher!
+            anyPublisher!
                 .collect()
-            //There was an error loading the model.
-                .sink(receiveCompletion: { error in
-                    print("Unable to load the model")
-                    if let error = error as? Error {
-                        print(error.localizedDescription)
-                    }
-                    cancellable?.cancel()
-            //The model loaded successfully.
-                }, receiveValue: { loadedEntities in
+                .sink(receiveValue: { loadedEntities in
+                    //The model loaded successfully.
                     //Now we can make use of it.
                     completion(loadedEntities)
-                    cancellable?.cancel()
-                })
+                     
+                }).store(in: &CancellablesHolder.cancellables)
         }
     }
     
@@ -146,7 +124,7 @@ public extension RKAssetLoader {
               let firstModelEntityName = entityNames.first
         else {return}
         DispatchQueue.main.async {
-            var cancellable: AnyCancellable? = nil
+             
             var anyPublisher: AnyPublisher<ModelEntity, Error>? = nil
             let firstPublisher = Entity.loadModelAsync(named: firstModelEntityName, in: bundle)
             for i in 1..<entityNames.count {
@@ -166,21 +144,14 @@ public extension RKAssetLoader {
                 }
 
             }
-            cancellable = anyPublisher!
+            anyPublisher!
                 .collect()
-            //There was an error loading the model.
-                .sink(receiveCompletion: { error in
-                    print("Unable to load the model")
-                    if let error = error as? Error {
-                        print(error.localizedDescription)
-                    }
-                    cancellable?.cancel()
-            //The model loaded successfully.
-                }, receiveValue: { loadedEntities in
+                .sink(receiveValue: { loadedEntities in
+                    //The model loaded successfully.
                     //Now we can make use of it.
                     completion(loadedEntities)
-                    cancellable?.cancel()
-                })
+                     
+                }).store(in: &CancellablesHolder.cancellables)
         }
     }
 }

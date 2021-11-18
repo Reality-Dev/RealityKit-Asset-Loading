@@ -10,6 +10,7 @@ This package includes classes and examples that enable easy, convenient asynchro
 - USDZ animations
 - Scenes from .reality files
 - Scenes from .rcproject files
+
 It also includes some convenience methods for generating simple shapes (box, sphere and plane) with simple materials.
 
 There are different options provided: some for loading one file at a time, and others for loading many all together at once. You oftentimes have the option of either providing a URL specifying the location of the file on disk to load, or providing a file name and a bundle (bundle is optional - it defaults to the main bundle).
@@ -37,7 +38,7 @@ See these documentation articles for more information:
 ### Swift Package Manager
 
 Add the URL of this repository to your Xcode 11+ Project under:
-    File > swift packages > add package dependency
+    File > Add Packages
     `https://github.com/Reality-Dev/RealityKit-Asset-Loading`
 
 ## Usage

@@ -27,7 +27,7 @@ public extension RKAssetLoader {
                let firstFile = audioFiles.first
          else {return}
          DispatchQueue.main.async {
-             var cancellable: AnyCancellable? = nil
+              
              var anyPublisher: AnyPublisher<AudioFileResource, Error>? = nil
              var firstPublisher: LoadRequest<AudioFileResource>
              if let firstURL = firstFile.url {
@@ -65,21 +65,14 @@ public extension RKAssetLoader {
                  }
 
              }
-             cancellable = anyPublisher!
+             anyPublisher!
                  .collect()
-             //There was an error loading the model.
-                 .sink(receiveCompletion: { error in
-                     print("Unable to load the model")
-                     if let error = error as? Error {
-                         print(error.localizedDescription)
-                     }
-                     cancellable?.cancel()
-             //The model loaded successfully.
-                 }, receiveValue: { loadedEntities in
+                 .sink(receiveValue: { loadedEntities in
+                     //The model loaded successfully.
                      //Now we can make use of it.
                      completion(loadedEntities)
-                     cancellable?.cancel()
-                 })
+                      
+                 }).store(in: &CancellablesHolder.cancellables)
          }
      }
     
@@ -102,17 +95,14 @@ public extension RKAssetLoader {
         }
         
         DispatchQueue.main.async {
-        _ = AudioFileResource.loadAsync(named: audioFile.resourceName,
+        AudioFileResource.loadAsync(named: audioFile.resourceName,
                                     in: bundle,
                                     inputMode: audioFile.inputMode,
                                     loadingStrategy: audioFile.loadingStrategy,
                                     shouldLoop: audioFile.shouldLoop)
-                .sink(
-                    receiveCompletion: { completion in
-                    print("Error loading audio")
-                }, receiveValue: { audioFileResource in
+                .sink(receiveValue: { audioFileResource in
                     completionHandler(audioFileResource)
-                })
+                }).store(in: &CancellablesHolder.cancellables)
         }}
     
      private static func loadAudioAsync(contentsOf url: URL,
@@ -127,15 +117,12 @@ public extension RKAssetLoader {
                                                          inputMode: inputMode,
                                                          loadingStrategy: loadingStrategy,
                                                          shouldLoop: shouldLoop)
-        var cancellable: AnyCancellable? = nil
-        cancellable = loadRequest
-            .sink(
-                receiveCompletion: { completion in
-                print("Error loading audio")
-            }, receiveValue: { audioFileResource in
+         
+        loadRequest
+            .sink(receiveValue: { audioFileResource in
                 completionHandler(audioFileResource)
-                cancellable?.cancel()
-            })
+                 
+            }).store(in: &CancellablesHolder.cancellables)
         }}
     
     ///Makes an Asynchronous load request with predefined presets.

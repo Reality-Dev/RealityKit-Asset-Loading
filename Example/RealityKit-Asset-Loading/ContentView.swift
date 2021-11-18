@@ -1,6 +1,5 @@
 //
 //  ContentView.swift
-//  Sound Localization
 //
 //  Created by Grant Jarvis
 //

@@ -22,6 +22,7 @@
 		559C74132737B20B0004E5CE /* LoadingModelEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C740B2737B20B0004E5CE /* LoadingModelEntities.swift */; };
 		55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 55C7AB27273757F800085161 /* Rocket_Project.rcproject */; };
 		55C7AB2A2737581700085161 /* Rocket.reality in Resources */ = {isa = PBXBuildFile; fileRef = 55C7AB292737581700085161 /* Rocket.reality */; };
+		55CF6E4B2746D53E00FECA6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF6E4A2746D53E00FECA6B /* Utilities.swift */; };
 		55E3A5B025FEB8D5004E6A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55E3A5A825FEB8D5004E6A08 /* Assets.xcassets */; };
 		55E3A5B125FEB8D5004E6A08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55E3A5AA25FEB8D5004E6A08 /* Preview Assets.xcassets */; };
 		55E3A5B225FEB8D5004E6A08 /* ARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A5AB25FEB8D5004E6A08 /* ARView.swift */; };
@@ -46,6 +47,7 @@
 		55BFE66525D2200F00E2BB8C /* RealityKit-Asset-Loading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RealityKit-Asset-Loading.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C7AB27273757F800085161 /* Rocket_Project.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Rocket_Project.rcproject; sourceTree = "<group>"; };
 		55C7AB292737581700085161 /* Rocket.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rocket.reality; sourceTree = "<group>"; };
+		55CF6E4A2746D53E00FECA6B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		55E3A5A825FEB8D5004E6A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55E3A5AA25FEB8D5004E6A08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		55E3A5AB25FEB8D5004E6A08 /* ARView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				559C74032737B20B0004E5CE /* LoadingEntities.swift */,
+				55CF6E4A2746D53E00FECA6B /* Utilities.swift */,
 				559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */,
 				559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */,
 				559C74082737B20B0004E5CE /* LoadingAudio.swift */,
@@ -224,6 +227,7 @@
 				559C74122737B20B0004E5CE /* LoadingFromRealityFiles.swift in Sources */,
 				559C74102737B20B0004E5CE /* LoadingAudio.swift in Sources */,
 				559C74132737B20B0004E5CE /* LoadingModelEntities.swift in Sources */,
+				55CF6E4B2746D53E00FECA6B /* Utilities.swift in Sources */,
 				559C740C2737B20B0004E5CE /* LoadingEntities.swift in Sources */,
 				559C740F2737B20B0004E5CE /* LoadingUSDZAnimations.swift in Sources */,
 				55E3A5B425FEB8D5004E6A08 /* ContentView.swift in Sources */,

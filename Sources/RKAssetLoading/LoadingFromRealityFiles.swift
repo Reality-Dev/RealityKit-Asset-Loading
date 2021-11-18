@@ -34,17 +34,10 @@ public extension RKAssetLoader {
                                       bundle: Bundle? = nil,
                                         completion: @escaping (Swift.Result<(Entity & HasAnchoring)?, Swift.Error>) -> Void) {
         DispatchQueue.main.async {
-        var loadRequest: AnyCancellable? = nil
-        loadRequest = Entity.loadAnchorAsync(named: filename, in: bundle)
-            .sink(receiveCompletion: { (loadCompletion) in
-            if case let .failure(error) = loadCompletion {
-                completion(.failure(error))
-                loadRequest?.cancel()
-            }
-        }, receiveValue: { (entity) in
+        Entity.loadAnchorAsync(named: filename, in: bundle)
+            .sink(receiveValue: { (entity) in
             completion(.success(entity))
-            loadRequest?.cancel()
-        })
+        }).store(in: &CancellablesHolder.cancellables)
         }}
     
     
@@ -69,16 +62,9 @@ public extension RKAssetLoader {
             return
         }
         DispatchQueue.main.async {
-        var loadRequest: AnyCancellable? = nil
-        loadRequest = Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
-            .sink(receiveCompletion: { (loadCompletion) in
-            if case let .failure(error) = loadCompletion {
-                completion(.failure(error))
-                loadRequest?.cancel()
-            }
-        }, receiveValue: { (entity) in
+        Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
+            .sink(receiveValue: { (entity) in
             completion(.success(entity))
-            loadRequest?.cancel()
-        })
+        }).store(in: &CancellablesHolder.cancellables)
     }}
 }

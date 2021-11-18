@@ -1,6 +1,5 @@
 //
 //  ARView.swift
-//  Sound Localization
 //
 //  Created by Grant Jarvis
 //
@@ -29,9 +28,9 @@ class ARSUIView: ARView {
 //        loadOneEntity()
 //        loadOneModelEntity()
 //        loadBodyTrackedEntity()
-//        loadMultipleEntitiesAtOnceWithFileNames()
+        loadMultipleEntitiesAtOnceWithFileNames()
 //        loadMultipleEntitiesAtOnceWithURLs()
-        loadRocketFromRealityFile()
+//        loadRocketFromRealityFile()
 //        loadRocketFromRealityComposerProject()
     }
     
