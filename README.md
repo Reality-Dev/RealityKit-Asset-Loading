@@ -45,6 +45,25 @@ Add the URL of this repository to your Xcode 11+ Project under:
 
 Add `import RKAssetLoading` to the top of your swift file to start.
 
+### Important:
+- Your completion handlers should use a capture list such as [weak self] to avoid a memory leak from the completion closure capturing a strong reference to any objects. Here is an example of using this asset loader with a capture list:
+``` swift
+    func loadOneModelEntity(){
+        RKAssetLoader.loadModelEntityAsync(named: "gold_star"){[weak self] starModelEntity in
+            self?.sceneAnchor.addChild(starModelEntity)
+            starModelEntity.position = [0, 0, -2]
+        }
+    }
+```
+
+To learn more about automatic reference counting, strong reference cycles, and closure capture lists, see this link:
+- [Swift Language Guide](https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html)
+
+See the example project for multiple examples of how to load different kinds of assets:
+- [Example Project](https://github.com/Reality-Dev/RealityKit-Asset-Loading/tree/main/Example)
+
+The ARView file in the example project is especially helpful:
+- [ARView](https://github.com/Reality-Dev/RealityKit-Asset-Loading/blob/main/Example/RealityKit-Asset-Loading/ARView.swift)
 
 
 
