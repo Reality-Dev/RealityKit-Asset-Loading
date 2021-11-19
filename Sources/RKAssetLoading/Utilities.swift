@@ -11,7 +11,7 @@ import Combine
 
 //From Apple's "Underwater" sample project.
 //This is used to handle the errors, if any, from loading an asset.
-extension Publisher {
+public extension Publisher {
     func sink(receiveValue: @escaping ((Self.Output) -> Void)) -> AnyCancellable {
         sink(
             receiveCompletion: { result in

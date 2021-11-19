@@ -13,6 +13,7 @@
 		555E0A9F2737944A0044E046 /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0A9E2737944A0044E046 /* toy_biplane.usdz */; };
 		555E0AA1273796820044E046 /* biped_robot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA0273796820044E046 /* biped_robot.usdz */; };
 		555E0AA32737A2C50044E046 /* audio_Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA22737A2C50044E046 /* audio_Loop.mp3 */; };
+		557A582F27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */; };
 		559C740C2737B20B0004E5CE /* LoadingEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74032737B20B0004E5CE /* LoadingEntities.swift */; };
 		559C740E2737B20B0004E5CE /* LoadingBodyTrackedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */; };
 		559C740F2737B20B0004E5CE /* LoadingUSDZAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */; };
@@ -37,6 +38,7 @@
 		555E0A9E2737944A0044E046 /* toy_biplane.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_biplane.usdz; sourceTree = "<group>"; };
 		555E0AA0273796820044E046 /* biped_robot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = biped_robot.usdz; sourceTree = "<group>"; };
 		555E0AA22737A2C50044E046 /* audio_Loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_Loop.mp3; sourceTree = "<group>"; };
+		557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAndGeneratingTextures.swift; sourceTree = "<group>"; };
 		559C74032737B20B0004E5CE /* LoadingEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingEntities.swift; sourceTree = "<group>"; };
 		559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBodyTrackedEntity.swift; sourceTree = "<group>"; };
 		559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingUSDZAnimations.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				559C74032737B20B0004E5CE /* LoadingEntities.swift */,
 				55CF6E4A2746D53E00FECA6B /* Utilities.swift */,
+				557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */,
 				559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */,
 				559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */,
 				559C74082737B20B0004E5CE /* LoadingAudio.swift */,
@@ -229,6 +232,7 @@
 				559C74132737B20B0004E5CE /* LoadingModelEntities.swift in Sources */,
 				55CF6E4B2746D53E00FECA6B /* Utilities.swift in Sources */,
 				559C740C2737B20B0004E5CE /* LoadingEntities.swift in Sources */,
+				557A582F27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift in Sources */,
 				559C740F2737B20B0004E5CE /* LoadingUSDZAnimations.swift in Sources */,
 				55E3A5B425FEB8D5004E6A08 /* ContentView.swift in Sources */,
 				55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */,

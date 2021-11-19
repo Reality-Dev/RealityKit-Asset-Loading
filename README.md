@@ -7,11 +7,20 @@ This package includes classes and examples that enable easy, convenient asynchro
 - ModelEntities
 - BodyTrackedEntity
 - Audio
+- TextureResources
 - USDZ animations
 - Scenes from .reality files
 - Scenes from .rcproject files
 
-It also includes some convenience methods for generating simple shapes (box, sphere and plane) with simple materials.
+It also includes some convenience methods for generating simple shapes (box, sphere and plane) with simple materials, such as `ModelEntity.makeSphere()`.
+
+For generating more simple shapes, see this package from Max Cobb:
+- [Reality Geometries](https://github.com/maxxfrazer/RealityGeometries)
+
+For generating text, see this package:
+- [RealityKit Text](https://github.com/Reality-Dev/RealityKit-Text)
+
+
 
 There are different options provided: some for loading one file at a time, and others for loading many all together at once. You oftentimes have the option of either providing a URL specifying the location of the file on disk to load, or providing a file name and a bundle (bundle is optional - it defaults to the main bundle).
 
