@@ -46,7 +46,7 @@ Add the URL of this repository to your Xcode 11+ Project under:
 Add `import RKAssetLoading` to the top of your swift file to start.
 
 ### Important:
-- Your completion handlers should use a capture list such as [weak self] to avoid a memory leak from the completion closure capturing a strong reference to any objects. Here is an example of using this asset loader with a capture list:
+- Your completion handlers should use a capture list such as `[weak self]` to avoid a memory leak from the completion closure capturing a strong reference to any objects. Here is an example of using this asset loader with a capture list:
 ``` swift
     func loadOneModelEntity(){
         RKAssetLoader.loadModelEntityAsync(named: "gold_star"){[weak self] starModelEntity in

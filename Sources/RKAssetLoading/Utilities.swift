@@ -8,9 +8,6 @@
 import Foundation
 import Combine
 
-struct CancellablesHolder {
-    static var cancellables = [AnyCancellable]()
-}
 
 //From Apple's "Underwater" sample project.
 //This is used to handle the errors, if any, from loading an asset.

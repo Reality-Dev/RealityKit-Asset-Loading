@@ -37,7 +37,7 @@ public extension RKAssetLoader {
         Entity.loadAnchorAsync(named: filename, in: bundle)
             .sink(receiveValue: { (entity) in
             completion(.success(entity))
-        }).store(in: &CancellablesHolder.cancellables)
+        }).store(in: &RKAssetLoader.cancellables)
         }}
     
     
@@ -65,6 +65,6 @@ public extension RKAssetLoader {
         Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
             .sink(receiveValue: { (entity) in
             completion(.success(entity))
-        }).store(in: &CancellablesHolder.cancellables)
+        }).store(in: &RKAssetLoader.cancellables)
     }}
 }

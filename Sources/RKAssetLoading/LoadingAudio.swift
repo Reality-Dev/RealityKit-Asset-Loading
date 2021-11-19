@@ -72,7 +72,7 @@ public extension RKAssetLoader {
                      //Now we can make use of it.
                      completion(loadedEntities)
                       
-                 }).store(in: &CancellablesHolder.cancellables)
+                 }).store(in: &RKAssetLoader.cancellables)
          }
      }
     
@@ -102,7 +102,7 @@ public extension RKAssetLoader {
                                     shouldLoop: audioFile.shouldLoop)
                 .sink(receiveValue: { audioFileResource in
                     completionHandler(audioFileResource)
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
         }}
     
      private static func loadAudioAsync(contentsOf url: URL,
@@ -122,7 +122,7 @@ public extension RKAssetLoader {
             .sink(receiveValue: { audioFileResource in
                 completionHandler(audioFileResource)
                  
-            }).store(in: &CancellablesHolder.cancellables)
+            }).store(in: &RKAssetLoader.cancellables)
         }}
     
     ///Makes an Asynchronous load request with predefined presets.

@@ -31,7 +31,7 @@ public extension RKAssetLoader {
                 //Now we can make use of it.
                 completion(loadedModelEntity)
                  
-            }).store(in: &CancellablesHolder.cancellables)
+            }).store(in: &RKAssetLoader.cancellables)
         }
     }
     
@@ -52,7 +52,7 @@ public extension RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedModelEntity)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
             }
     }
     
@@ -109,7 +109,7 @@ public extension RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedEntities)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
         }
     }
     
@@ -151,7 +151,7 @@ public extension RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedEntities)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
         }
     }
 }

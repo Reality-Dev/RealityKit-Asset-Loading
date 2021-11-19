@@ -11,6 +11,8 @@ import Foundation
 
 
 public struct RKAssetLoader {
+    
+    static var cancellables = [AnyCancellable]()
 
     
     ///This loads the entity asynchronously from a file. Uses asynchronous loading to avoid stalling the main thread and freezing frames.
@@ -31,7 +33,7 @@ public struct RKAssetLoader {
                   receiveValue: { (loadedEntity: Entity) in
                 //Now we can make use of it.
                 completion(loadedEntity)
-            }).store(in: &CancellablesHolder.cancellables)
+            }).store(in: &RKAssetLoader.cancellables)
         }
     }
     
@@ -51,7 +53,7 @@ public struct RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedEntity)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
             }
     }
     
@@ -108,7 +110,7 @@ public struct RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedEntities)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
         }
     }
     
@@ -150,7 +152,7 @@ public struct RKAssetLoader {
                     //Now we can make use of it.
                     completion(loadedEntities)
                      
-                }).store(in: &CancellablesHolder.cancellables)
+                }).store(in: &RKAssetLoader.cancellables)
         }
     }
 }

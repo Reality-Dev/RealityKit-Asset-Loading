@@ -24,7 +24,7 @@ public extension RKAssetLoader {
         Entity.loadBodyTrackedAsync(named: name).sink(
             receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
-            }).store(in: &CancellablesHolder.cancellables)
+            }).store(in: &RKAssetLoader.cancellables)
         }}
     
 
@@ -42,7 +42,7 @@ public extension RKAssetLoader {
         Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
             .sink(receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
-            }).store(in: &CancellablesHolder.cancellables)
+            }).store(in: &RKAssetLoader.cancellables)
     }}
     
 }
