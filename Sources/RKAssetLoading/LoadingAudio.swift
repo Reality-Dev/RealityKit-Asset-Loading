@@ -17,9 +17,24 @@ public extension RKAssetLoader {
         var inputMode: AudioResource.InputMode = .spatial
         var loadingStrategy: AudioFileResource.LoadingStrategy = .preload
         var shouldLoop: Bool
+        
+        public init(resourceName: String,
+                    url: URL?,
+                    inputMode: AudioResource.InputMode = .spatial,
+                    loadingStrategy: AudioFileResource.LoadingStrategy = .preload,
+                    shouldLoop: Bool) {
+            self.resourceName = resourceName
+            self.url = url
+            self.inputMode = inputMode
+            self.loadingStrategy = loadingStrategy
+            self.shouldLoop = shouldLoop
+        }
     }
     
+    
     ///If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
+    ///
+    ///This function requires two or more audio files to load. If you would like to load one audio file, use `loadAudioAsync` instead.
      static func loadAudioFilesAsync(in bundle: Bundle? = nil,
                                      audioFiles: AudioFile...,
                                      completion: @escaping (_ audioFileResources: [AudioFileResource]) -> ()){
@@ -63,7 +78,6 @@ public extension RKAssetLoader {
                          }
                          .eraseToAnyPublisher()
                  }
-
              }
              anyPublisher!
                  .collect()

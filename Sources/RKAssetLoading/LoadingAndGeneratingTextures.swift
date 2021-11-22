@@ -1,5 +1,5 @@
 //
-//  GeneratingTextures.swift
+//  LoadingAndGeneratingTextures.swift
 //  RealityKit-Asset-Loading
 //
 //  Created by Grant Jarvis on 11/19/21.
