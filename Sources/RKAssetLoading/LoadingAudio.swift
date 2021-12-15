@@ -19,7 +19,7 @@ public extension RKAssetLoader {
         var shouldLoop: Bool
         
         public init(resourceName: String,
-                    url: URL?,
+                    url: URL? = nil,
                     inputMode: AudioResource.InputMode = .spatial,
                     loadingStrategy: AudioFileResource.LoadingStrategy = .preload,
                     shouldLoop: Bool) {

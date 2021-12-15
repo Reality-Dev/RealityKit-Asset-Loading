@@ -3,12 +3,13 @@
 ## Discussion
 
 This package includes classes and examples that enable easy, convenient asynchronous asset loading in RealityKit for all of these kinds of assets:
-- Entities
-- ModelEntities
-- BodyTrackedEntity
+- USDZ files
+    - Entities
+    - ModelEntities
+    - BodyTrackedEntity
+    - USDZ animations
 - Audio
 - TextureResources
-- USDZ animations
 - Scenes from .reality files
 - Scenes from .rcproject files
 
@@ -74,6 +75,10 @@ See the example project for multiple examples of how to load different kinds of 
 The ARView file in the example project is especially helpful:
 - [ARView](https://github.com/Reality-Dev/RealityKit-Asset-Loading/blob/main/Example/RealityKit-Asset-Loading/ARView.swift)
 
+
+### Audio
+
+When initializing an `RKAssetLoader.AudioFile` to use for loading audio you may use either the URL of the file on disk or the resource name in the given bundle. If the URL is non-nil, then the file will be loaded from the URL by default. If you are using `resourceName`, then leave the URL as nil, and be sure to include the file extension in the `resourceName` like this: `"myAudio.mp3"`.
 
 
 
