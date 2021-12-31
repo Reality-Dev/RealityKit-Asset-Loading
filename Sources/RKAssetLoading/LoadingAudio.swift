@@ -38,6 +38,8 @@ public extension RKAssetLoader {
      static func loadAudioFilesAsync(in bundle: Bundle? = nil,
                                      audioFiles: AudioFile...,
                                      completion: @escaping (_ audioFileResources: [AudioFileResource]) -> ()){
+         assert(audioFiles.count > 1, "loadAudioFilesAsync must use 2 or more audio files. To load just one file, use loadAudioAsync() instead.")
+         
          guard audioFiles.count > 1,
                let firstFile = audioFiles.first
          else {return}

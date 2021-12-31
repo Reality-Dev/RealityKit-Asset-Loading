@@ -81,6 +81,10 @@ The ARView file in the example project is especially helpful:
 When initializing an `RKAssetLoader.AudioFile` to use for loading audio you may use either the URL of the file on disk or the resource name in the given bundle. If the URL is non-nil, then the file will be loaded from the URL by default. If you are using `resourceName`, then leave the URL as nil, and be sure to include the file extension in the `resourceName` like this: `"myAudio.mp3"`.
 
 
+## More
+
+Pull Requests are welcome and encouraged.
+
 
 
 

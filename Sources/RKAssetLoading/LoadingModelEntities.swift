@@ -68,6 +68,8 @@ public extension RKAssetLoader {
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
     static func loadEntitiesAsync(entities: (path: URL, name: String?)...,
                                          completion: @escaping (([ModelEntity]) -> Void)){
+        assert(entities.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
+        
         guard entities.count > 1,
               let firstModelEntity = entities.first
         else {return}
@@ -120,6 +122,8 @@ public extension RKAssetLoader {
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
     static func loadEntitiesAsync(bundle: Bundle? = nil, entityNames: String...,
                                          completion: @escaping (([ModelEntity]) -> Void)){
+        assert(entities.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
+        
         guard entityNames.count > 1,
               let firstModelEntityName = entityNames.first
         else {return}
