@@ -33,12 +33,11 @@ public extension RKAssetLoader {
     static func loadRealitySceneAsync(filename: String,
                                       bundle: Bundle? = nil,
                                         completion: @escaping (Swift.Result<(Entity & HasAnchoring)?, Swift.Error>) -> Void) {
-        DispatchQueue.main.async {
         Entity.loadAnchorAsync(named: filename, in: bundle)
             .sink(receiveValue: { (entity) in
             completion(.success(entity))
         }).store(in: &RKAssetLoader.cancellables)
-        }}
+    }
     
     
     ///Use this function to access a particular scene from within a .reality file.
@@ -61,10 +60,9 @@ public extension RKAssetLoader {
             print("No file exists at path \(realityFileSceneURL.path)")
             return
         }
-        DispatchQueue.main.async {
         Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
             .sink(receiveValue: { (entity) in
             completion(.success(entity))
         }).store(in: &RKAssetLoader.cancellables)
-    }}
+    }
 }

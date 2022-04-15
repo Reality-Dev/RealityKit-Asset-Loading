@@ -17,7 +17,6 @@ public extension RKAssetLoader {
                                      withName resourceName: String? = nil,
                                      options: TextureResource.CreateOptions = .init(semantic: .color),
                                      completionHandler: @escaping ((_ texture: TextureResource)->())){
-        DispatchQueue.main.async {
             TextureResource.generateAsync(from: cgImage,
                                           withName: resourceName,
                                           options: options)
@@ -25,13 +24,12 @@ public extension RKAssetLoader {
                     completionHandler(texture)
                     
                 }).store(in: &RKAssetLoader.cancellables)
-    }}
+    }
     
     static func loadTextureAsync(named resourceName: String,
                                  in bundle: Bundle? = nil,
                                  options: TextureResource.CreateOptions = .init(semantic: .color),
                                  completionHandler: @escaping ((_ texture: TextureResource)->())){
-        DispatchQueue.main.async {
             TextureResource.loadAsync(named: resourceName,
                                       in: bundle,
                                       options: options)
@@ -39,13 +37,12 @@ public extension RKAssetLoader {
                     completionHandler(texture)
                     
                 }).store(in: &RKAssetLoader.cancellables)
-    }}
+    }
     
     static func loadTextureAsync(contentsOf url: URL,
                                  named resourceName: String,
                                  options: TextureResource.CreateOptions = .init(semantic: .color),
                                  completionHandler: @escaping ((_ texture: TextureResource)->())){
-        DispatchQueue.main.async {
             TextureResource.loadAsync(contentsOf: url,
                                       withName: resourceName,
                                       options: options)
@@ -53,5 +50,5 @@ public extension RKAssetLoader {
                     completionHandler(texture)
                     
                 }).store(in: &RKAssetLoader.cancellables)
-    }}
+    }
 }

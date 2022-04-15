@@ -43,53 +43,51 @@ public extension RKAssetLoader {
          guard audioFiles.count > 1,
                let firstFile = audioFiles.first
          else {return}
-         DispatchQueue.main.async {
-              
-             var anyPublisher: AnyPublisher<AudioFileResource, Error>? = nil
-             var firstPublisher: LoadRequest<AudioFileResource>
-             if let firstURL = firstFile.url {
-                 firstPublisher = AudioFileResource.loadAsync(contentsOf: firstURL, withName: firstFile.resourceName,  inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
-             } else {
-                 firstPublisher = AudioFileResource.loadAsync(named: firstFile.resourceName, in: bundle, inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
-             }
-
-             for i in 1..<audioFiles.count {
-                 let audioFile = audioFiles[i]
-                 if i == 1 {
-                     var localPublisher: LoadRequest<AudioFileResource>
-                     if let fileURL = audioFile.url {
-                         localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                     } else {
-                         localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                     }
-                     anyPublisher = firstPublisher.append(localPublisher)
-                         .tryMap { resource in
-                             return resource
-                         }
-                         .eraseToAnyPublisher()
-                 } else {
-                     var localPublisher: LoadRequest<AudioFileResource>
-                     if let fileURL = audioFile.url {
-                         localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                     } else {
-                         localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                     }
-                     anyPublisher = anyPublisher?.append(localPublisher)
-                         .tryMap { resource in
-                             return resource
-                         }
-                         .eraseToAnyPublisher()
-                 }
-             }
-             anyPublisher!
-                 .collect()
-                 .sink(receiveValue: { loadedEntities in
-                     //The model loaded successfully.
-                     //Now we can make use of it.
-                     completion(loadedEntities)
-                      
-                 }).store(in: &RKAssetLoader.cancellables)
+          
+         var anyPublisher: AnyPublisher<AudioFileResource, Error>? = nil
+         var firstPublisher: LoadRequest<AudioFileResource>
+         if let firstURL = firstFile.url {
+             firstPublisher = AudioFileResource.loadAsync(contentsOf: firstURL, withName: firstFile.resourceName,  inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
+         } else {
+             firstPublisher = AudioFileResource.loadAsync(named: firstFile.resourceName, in: bundle, inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
          }
+
+         for i in 1..<audioFiles.count {
+             let audioFile = audioFiles[i]
+             if i == 1 {
+                 var localPublisher: LoadRequest<AudioFileResource>
+                 if let fileURL = audioFile.url {
+                     localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
+                 } else {
+                     localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
+                 }
+                 anyPublisher = firstPublisher.append(localPublisher)
+                     .tryMap { resource in
+                         return resource
+                     }
+                     .eraseToAnyPublisher()
+             } else {
+                 var localPublisher: LoadRequest<AudioFileResource>
+                 if let fileURL = audioFile.url {
+                     localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
+                 } else {
+                     localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
+                 }
+                 anyPublisher = anyPublisher?.append(localPublisher)
+                     .tryMap { resource in
+                         return resource
+                     }
+                     .eraseToAnyPublisher()
+             }
+         }
+         anyPublisher!
+             .collect()
+             .sink(receiveValue: { loadedEntities in
+                 //The model loaded successfully.
+                 //Now we can make use of it.
+                 completion(loadedEntities)
+                  
+             }).store(in: &RKAssetLoader.cancellables)
      }
     
     
@@ -110,7 +108,6 @@ public extension RKAssetLoader {
             return
         }
         
-        DispatchQueue.main.async {
         AudioFileResource.loadAsync(named: audioFile.resourceName,
                                     in: bundle,
                                     inputMode: audioFile.inputMode,
@@ -119,7 +116,7 @@ public extension RKAssetLoader {
                 .sink(receiveValue: { audioFileResource in
                     completionHandler(audioFileResource)
                 }).store(in: &RKAssetLoader.cancellables)
-        }}
+        }
     
      private static func loadAudioAsync(contentsOf url: URL,
                                withName resourceName: String? = nil,
@@ -127,7 +124,6 @@ public extension RKAssetLoader {
                                loadingStrategy: AudioFileResource.LoadingStrategy = .preload,
                                shouldLoop: Bool = false,
                                completionHandler: @escaping (_ audioFileResource: AudioFileResource) -> ()) {
-        DispatchQueue.main.async {
         let loadRequest = RKAssetLoader.makeLoadRequest(contentsOf: url,
                                                          withName: resourceName,
                                                          inputMode: inputMode,
@@ -139,7 +135,7 @@ public extension RKAssetLoader {
                 completionHandler(audioFileResource)
                  
             }).store(in: &RKAssetLoader.cancellables)
-        }}
+        }
     
     ///Makes an Asynchronous load request with predefined presets.
     private static func makeLoadRequest(contentsOf url: URL,

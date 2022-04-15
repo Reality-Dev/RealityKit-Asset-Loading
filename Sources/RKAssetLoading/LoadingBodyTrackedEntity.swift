@@ -19,13 +19,12 @@ public extension RKAssetLoader {
     ///   - name: The name of the usdz file in the main bundle.
     ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
     static func loadBodyTrackedEntityAsync(named name: String, completionHandler: @escaping ((_ character: BodyTrackedEntity) -> Void)){
-        DispatchQueue.main.async {
 
         Entity.loadBodyTrackedAsync(named: name).sink(
             receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
             }).store(in: &RKAssetLoader.cancellables)
-        }}
+        }
     
 
     /// Loads a body-tracked entity from a file URL asynchronously.
@@ -38,11 +37,10 @@ public extension RKAssetLoader {
             print("No file exists at path \(url.path)")
             return
         }
-        DispatchQueue.main.async {
         Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
             .sink(receiveValue: { bodyTrackedEntity in
                 completionHandler(bodyTrackedEntity)
             }).store(in: &RKAssetLoader.cancellables)
-    }}
+    }
     
 }

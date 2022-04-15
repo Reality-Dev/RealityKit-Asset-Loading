@@ -56,6 +56,14 @@ Add the URL of this repository to your Xcode 11+ Project under:
 Add `import RKAssetLoading` to the top of your swift file to start.
 
 ### Important:
+
+- Be sure to call the loading functions from the main thread. If you need to call them from code running on a background thread, push the code to the main thread with:
+``` swift
+        DispatchQueue.main.async {
+        //Loading code goes here
+    }
+```
+
 - Your completion handlers should use a capture list such as `[weak self]` to avoid a memory leak from the completion closure capturing a strong reference to any objects. Here is an example of using this asset loader with a capture list:
 ``` swift
     func loadOneModelEntity(){

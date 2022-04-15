@@ -18,7 +18,7 @@ public extension Publisher {
                 switch result {
                 case .failure(let error):
                     Swift.print("Error loading asset")
-                    Swift.print(error.localizedDescription)
+                    Swift.print(error)
                 default:
                     return
                 }
