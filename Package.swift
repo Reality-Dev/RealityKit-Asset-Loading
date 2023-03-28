@@ -6,15 +6,14 @@ import PackageDescription
 import PackageDescription
 
 let package = Package(
-  name: "RKAssetLoading",
-  platforms: [.iOS("13.0"), .macOS(.v10_15)],
-  products: [
-    .library(name: "RKAssetLoading", targets: ["RKAssetLoading"])
-  ],
-  dependencies: [],
-  targets: [
-    .target(name: "RKAssetLoading", dependencies: [])
-  ],
-  swiftLanguageVersions: [.v5]
+    name: "RKAssetLoading",
+    platforms: [.iOS("13.0"), .macOS(.v10_15)],
+    products: [
+        .library(name: "RKAssetLoading", targets: ["RKAssetLoading"]),
+    ],
+    dependencies: [],
+    targets: [
+        .target(name: "RKAssetLoading", dependencies: []),
+    ],
+    swiftLanguageVersions: [.v5]
 )
-
