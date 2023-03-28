@@ -6,11 +6,12 @@
 //
 
 import RealityKit
-import UIKit
+import CoreGraphics
+import Foundation
 import Combine
 
 
-@available(iOS 15.0, *)
+@available(macOS 12.0, iOS 15.0, *)
 public extension RKAssetLoader {
     
     static func generateTextureAsync(from cgImage: CGImage,

@@ -9,6 +9,7 @@ import RealityKit
 import Combine
 import Foundation
 
+#if os(iOS)
 public extension RKAssetLoader {
     
     /// Asynchronously loads the 3D character.
@@ -42,5 +43,5 @@ public extension RKAssetLoader {
                 completionHandler(bodyTrackedEntity)
             }).store(in: &RKAssetLoader.cancellables)
     }
-    
 }
+#endif

@@ -6,14 +6,13 @@
 //
 
 import RealityKit
-import UIKit
 
 //For generating text, see: https://github.com/Reality-Dev/RealityKit-Text
 
 //These are useful for making simple shapes with Simple Materials
 
 public extension ModelEntity {
-    static func makeSphere(color: UIColor = .blue,
+    static func makeSphere(color: SimpleMaterial.Color = .blue,
                             radius: Float = 0.05,
                             isMetallic: Bool = true) -> ModelEntity{
         
@@ -23,7 +22,7 @@ public extension ModelEntity {
                            materials: [sphereMaterial])
     }
 
-    static func makeBox(color: UIColor = .blue,
+    static func makeBox(color: SimpleMaterial.Color = .blue,
                          isMetallic: Bool = true,
                          size: simd_float3 = .one,
                          cornerRadius: Float = 0,
@@ -35,7 +34,7 @@ public extension ModelEntity {
                            materials: [boxMaterial])
     }
 
-    static func makePlane(color: UIColor = .blue,
+    static func makePlane(color: SimpleMaterial.Color = .blue,
                           isMetallic: Bool = true,
                           width: Float = 1,
                           height: Float = 1,

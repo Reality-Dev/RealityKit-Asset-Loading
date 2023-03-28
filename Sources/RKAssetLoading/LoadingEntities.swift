@@ -12,7 +12,7 @@ import Foundation
 
 public struct RKAssetLoader {
     
-    static var cancellables = [AnyCancellable]()
+    static var cancellables = Set<AnyCancellable>()
 
     
     ///This loads the entity asynchronously from a file. Uses asynchronous loading to avoid stalling the main thread and freezing frames.

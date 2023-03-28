@@ -7,7 +7,7 @@
 
 import RealityKit
 import Combine
-import UIKit
+import Foundation
 
 public extension RKAssetLoader {
 

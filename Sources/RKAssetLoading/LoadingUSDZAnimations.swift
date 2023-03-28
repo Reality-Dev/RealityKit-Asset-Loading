@@ -30,7 +30,7 @@ public extension Entity {
         return animEntity.availableAnimations
     }
     
-    @available(iOS 15.0, *)
+    @available(macOS 12.0, iOS 15.0, *)
     @discardableResult func playFirstAnimation(transitionDuration: TimeInterval = 0,
                                                blendLayerOffset: Int = 0,
                                                separateAnimatedValue: Bool = false,
