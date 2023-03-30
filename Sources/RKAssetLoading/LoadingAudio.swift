@@ -30,12 +30,24 @@ public extension RKAssetLoader {
             self.shouldLoop = shouldLoop
         }
     }
-
+    
+    //VARIADIC VERSION
     /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
     ///
     /// This function requires two or more audio files to load. If you would like to load one audio file, use `loadAudioAsync` instead.
     static func loadAudioFilesAsync(in bundle: Bundle? = nil,
                                     audioFiles: AudioFile...,
+                                    completion: @escaping (_ audioFileResources: [AudioFileResource]) -> Void)
+    {
+        loadAudioFilesAsync(in: bundle, audioFiles: audioFiles, completion: completion)
+    }
+
+    //ARRAY VERSION
+    /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
+    ///
+    /// This function requires two or more audio files to load. If you would like to load one audio file, use `loadAudioAsync` instead.
+    static func loadAudioFilesAsync(in bundle: Bundle? = nil,
+                                    audioFiles: [AudioFile],
                                     completion: @escaping (_ audioFileResources: [AudioFileResource]) -> Void)
     {
         assert(audioFiles.count > 1, "loadAudioFilesAsync must use 2 or more audio files. To load just one file, use loadAudioAsync() instead.")

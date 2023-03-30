@@ -48,12 +48,24 @@ public enum RKAssetLoader {
 
                 }).store(in: &RKAssetLoader.cancellables)
     }
-
+    
+    //VARIADIC VERSION
     /// For use with loading two or more entities at a time using the URL of the file on disk. You may load as many as you would like.
     /// - Parameters:
     ///   - entities: A variable number of tuples, each containing a url (on disk) and name (optional) of an entity to load.
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
     public static func loadEntitiesAsync(entities: (path: URL, name: String?)...,
+                                         completion: @escaping (([Entity]) -> Void))
+    {
+        loadEntitiesAsync(entities: entities, completion: completion)
+    }
+
+    //ARRAY VERSION
+    /// For use with loading two or more entities at a time using the URL of the file on disk. You may load as many as you would like.
+    /// - Parameters:
+    ///   - entities: A variable number of tuples, each containing a url (on disk) and name (optional) of an entity to load.
+    ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
+    public static func loadEntitiesAsync(entities: [(path: URL, name: String?)],
                                          completion: @escaping (([Entity]) -> Void))
     {
         assert(entities.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
@@ -98,13 +110,26 @@ public enum RKAssetLoader {
 
             }).store(in: &RKAssetLoader.cancellables)
     }
-
+    
+    //VARIADIC VERSION
     /// For use with loading two or more entities at a time using the fileName and bundle. You may load as many as you would like. Entities must be in the same bundle.
     /// - Parameters:
     ///   - bundle: The bundle containing the file. Use nil or omit this parameter to search the app’s main bundle.
     ///   - entityNames: The file names of the entities to load, without the ".usdz" file extension.
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
     public static func loadEntitiesAsync(bundle: Bundle? = nil, entityNames: String...,
+                                         completion: @escaping (([Entity]) -> Void))
+    {
+        loadEntitiesAsync(bundle: bundle, entityNames: entityNames, completion: completion)
+    }
+
+    //ARRAY VERSION
+    /// For use with loading two or more entities at a time using the fileName and bundle. You may load as many as you would like. Entities must be in the same bundle.
+    /// - Parameters:
+    ///   - bundle: The bundle containing the file. Use nil or omit this parameter to search the app’s main bundle.
+    ///   - entityNames: The file names of the entities to load, without the ".usdz" file extension.
+    ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
+    public static func loadEntitiesAsync(bundle: Bundle? = nil, entityNames: [String],
                                          completion: @escaping (([Entity]) -> Void))
     {
         assert(entityNames.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
