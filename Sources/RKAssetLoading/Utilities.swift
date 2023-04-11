@@ -32,7 +32,7 @@ public extension Publisher {
 enum AsyncError: Error {
     case finishedWithoutValue
 }
-extension AnyPublisher {
+public extension AnyPublisher {
     func async() async throws -> Output {
         try await withCheckedThrowingContinuation { continuation in
             var cancellable: AnyCancellable?
