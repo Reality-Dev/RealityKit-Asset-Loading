@@ -3,27 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5536F50A29E5D457001B09A7 /* RKAssetLoading in Frameworks */ = {isa = PBXBuildFile; productRef = 5536F50929E5D457001B09A7 /* RKAssetLoading */; };
 		553D698827372202001BA4ED /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 553D698727372202001BA4ED /* README.md */; };
 		553D699127373FA4001BA4ED /* aluminum_capsule.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 553D698E27373FA4001BA4ED /* aluminum_capsule.usdz */; };
 		553D699227373FA4001BA4ED /* gold_star.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 553D698F27373FA4001BA4ED /* gold_star.usdz */; };
 		555E0A9F2737944A0044E046 /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0A9E2737944A0044E046 /* toy_biplane.usdz */; };
 		555E0AA1273796820044E046 /* biped_robot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA0273796820044E046 /* biped_robot.usdz */; };
 		555E0AA32737A2C50044E046 /* audio_Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA22737A2C50044E046 /* audio_Loop.mp3 */; };
-		557A582F27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */; };
-		559C740C2737B20B0004E5CE /* LoadingEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74032737B20B0004E5CE /* LoadingEntities.swift */; };
-		559C740E2737B20B0004E5CE /* LoadingBodyTrackedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */; };
-		559C740F2737B20B0004E5CE /* LoadingUSDZAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */; };
-		559C74102737B20B0004E5CE /* LoadingAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74082737B20B0004E5CE /* LoadingAudio.swift */; };
-		559C74112737B20B0004E5CE /* GeneratingPrimitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C74092737B20B0004E5CE /* GeneratingPrimitives.swift */; };
-		559C74122737B20B0004E5CE /* LoadingFromRealityFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C740A2737B20B0004E5CE /* LoadingFromRealityFiles.swift */; };
-		559C74132737B20B0004E5CE /* LoadingModelEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559C740B2737B20B0004E5CE /* LoadingModelEntities.swift */; };
 		55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 55C7AB27273757F800085161 /* Rocket_Project.rcproject */; };
 		55C7AB2A2737581700085161 /* Rocket.reality in Resources */ = {isa = PBXBuildFile; fileRef = 55C7AB292737581700085161 /* Rocket.reality */; };
-		55CF6E4B2746D53E00FECA6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CF6E4A2746D53E00FECA6B /* Utilities.swift */; };
 		55E3A5B025FEB8D5004E6A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55E3A5A825FEB8D5004E6A08 /* Assets.xcassets */; };
 		55E3A5B125FEB8D5004E6A08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55E3A5AA25FEB8D5004E6A08 /* Preview Assets.xcassets */; };
 		55E3A5B225FEB8D5004E6A08 /* ARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E3A5AB25FEB8D5004E6A08 /* ARView.swift */; };
@@ -32,24 +24,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5536F50729E5D3F9001B09A7 /* RealityKit-Asset-Loading */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "RealityKit-Asset-Loading"; path = ..; sourceTree = "<group>"; };
 		553D698727372202001BA4ED /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		553D698E27373FA4001BA4ED /* aluminum_capsule.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = aluminum_capsule.usdz; sourceTree = "<group>"; };
 		553D698F27373FA4001BA4ED /* gold_star.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = gold_star.usdz; sourceTree = "<group>"; };
 		555E0A9E2737944A0044E046 /* toy_biplane.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_biplane.usdz; sourceTree = "<group>"; };
 		555E0AA0273796820044E046 /* biped_robot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = biped_robot.usdz; sourceTree = "<group>"; };
 		555E0AA22737A2C50044E046 /* audio_Loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_Loop.mp3; sourceTree = "<group>"; };
-		557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAndGeneratingTextures.swift; sourceTree = "<group>"; };
-		559C74032737B20B0004E5CE /* LoadingEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingEntities.swift; sourceTree = "<group>"; };
-		559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingBodyTrackedEntity.swift; sourceTree = "<group>"; };
-		559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingUSDZAnimations.swift; sourceTree = "<group>"; };
-		559C74082737B20B0004E5CE /* LoadingAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingAudio.swift; sourceTree = "<group>"; };
-		559C74092737B20B0004E5CE /* GeneratingPrimitives.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratingPrimitives.swift; sourceTree = "<group>"; };
-		559C740A2737B20B0004E5CE /* LoadingFromRealityFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingFromRealityFiles.swift; sourceTree = "<group>"; };
-		559C740B2737B20B0004E5CE /* LoadingModelEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingModelEntities.swift; sourceTree = "<group>"; };
 		55BFE66525D2200F00E2BB8C /* RealityKit-Asset-Loading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RealityKit-Asset-Loading.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C7AB27273757F800085161 /* Rocket_Project.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Rocket_Project.rcproject; sourceTree = "<group>"; };
 		55C7AB292737581700085161 /* Rocket.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rocket.reality; sourceTree = "<group>"; };
-		55CF6E4A2746D53E00FECA6B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		55E3A5A825FEB8D5004E6A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55E3A5AA25FEB8D5004E6A08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		55E3A5AB25FEB8D5004E6A08 /* ARView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
@@ -63,12 +47,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5536F50A29E5D457001B09A7 /* RKAssetLoading in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5536F50629E5D3F9001B09A7 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				5536F50729E5D3F9001B09A7 /* RealityKit-Asset-Loading */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		5536F50829E5D457001B09A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		553D699427373FA7001BA4ED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,37 +83,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5560FA35272E379F00E80607 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				559C74022737B20B0004E5CE /* RKAssetLoading */,
-			);
-			name = Sources;
-			path = ../../Sources;
-			sourceTree = "<group>";
-		};
-		559C74022737B20B0004E5CE /* RKAssetLoading */ = {
-			isa = PBXGroup;
-			children = (
-				559C74032737B20B0004E5CE /* LoadingEntities.swift */,
-				55CF6E4A2746D53E00FECA6B /* Utilities.swift */,
-				557A582E27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift */,
-				559C74062737B20B0004E5CE /* LoadingBodyTrackedEntity.swift */,
-				559C74072737B20B0004E5CE /* LoadingUSDZAnimations.swift */,
-				559C74082737B20B0004E5CE /* LoadingAudio.swift */,
-				559C74092737B20B0004E5CE /* GeneratingPrimitives.swift */,
-				559C740A2737B20B0004E5CE /* LoadingFromRealityFiles.swift */,
-				559C740B2737B20B0004E5CE /* LoadingModelEntities.swift */,
-			);
-			path = RKAssetLoading;
-			sourceTree = "<group>";
-		};
 		55BFE65C25D2200F00E2BB8C = {
 			isa = PBXGroup;
 			children = (
+				5536F50629E5D3F9001B09A7 /* Packages */,
 				553D698727372202001BA4ED /* README.md */,
 				55E3A5A625FEB8D5004E6A08 /* RealityKit-Asset-Loading */,
 				55BFE66625D2200F00E2BB8C /* Products */,
+				5536F50829E5D457001B09A7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,7 +111,6 @@
 				55E3A5AB25FEB8D5004E6A08 /* ARView.swift */,
 				55E3A5AC25FEB8D5004E6A08 /* AppDelegate.swift */,
 				55E3A5AD25FEB8D5004E6A08 /* ContentView.swift */,
-				5560FA35272E379F00E80607 /* Sources */,
 				55E3A5AE25FEB8D5004E6A08 /* Info.plist */,
 			);
 			path = "RealityKit-Asset-Loading";
@@ -164,6 +140,9 @@
 			dependencies = (
 			);
 			name = "RealityKit-Asset-Loading";
+			packageProductDependencies = (
+				5536F50929E5D457001B09A7 /* RKAssetLoading */,
+			);
 			productName = "Sound Localization";
 			productReference = 55BFE66525D2200F00E2BB8C /* RealityKit-Asset-Loading.app */;
 			productType = "com.apple.product-type.application";
@@ -225,15 +204,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E3A5B325FEB8D5004E6A08 /* AppDelegate.swift in Sources */,
-				559C740E2737B20B0004E5CE /* LoadingBodyTrackedEntity.swift in Sources */,
-				559C74112737B20B0004E5CE /* GeneratingPrimitives.swift in Sources */,
-				559C74122737B20B0004E5CE /* LoadingFromRealityFiles.swift in Sources */,
-				559C74102737B20B0004E5CE /* LoadingAudio.swift in Sources */,
-				559C74132737B20B0004E5CE /* LoadingModelEntities.swift in Sources */,
-				55CF6E4B2746D53E00FECA6B /* Utilities.swift in Sources */,
-				559C740C2737B20B0004E5CE /* LoadingEntities.swift in Sources */,
-				557A582F27482FB3009C71A2 /* LoadingAndGeneratingTextures.swift in Sources */,
-				559C740F2737B20B0004E5CE /* LoadingUSDZAnimations.swift in Sources */,
 				55E3A5B425FEB8D5004E6A08 /* ContentView.swift in Sources */,
 				55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */,
 				55E3A5B225FEB8D5004E6A08 /* ARView.swift in Sources */,
@@ -425,6 +395,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5536F50929E5D457001B09A7 /* RKAssetLoading */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RKAssetLoading;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 55BFE65D25D2200F00E2BB8C /* Project object */;
 }
