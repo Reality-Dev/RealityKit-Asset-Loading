@@ -25,6 +25,8 @@ For generating text, see this package:
 
 There are different options provided: some for loading one file at a time, and others for loading many all together at once. You oftentimes have the option of either providing a URL specifying the location of the file on disk to load, or providing a file name and a bundle (bundle is optional - it defaults to the main bundle).
 
+There is also the option of using a completion handler OR using async-await syntax.
+
 This package only includes asynchronous loading methods.
 Synchronous load operations block the thread on which you call them which can lead to the user interface stalling and the app becoming unresponsive, especially when loading complex scenes like is often done for AR experiences.
 To maintain a smooth user interface, it’s typically best to use an asynchronous load instead. All synchronous load operations have an asynchronous counterpart.
@@ -68,11 +70,23 @@ Add `import RKAssetLoading` to the top of your swift file to start.
 ``` swift
     func loadOneModelEntity(){
         RKAssetLoader.loadModelEntityAsync(named: "gold_star"){[weak self] starModelEntity in
+        
             self?.sceneAnchor.addChild(starModelEntity)
             starModelEntity.position = [0, 0, -2]
         }
     }
 ```
+
+Here is the async-await version of that call:
+``` swift
+    func loadOneModelEntityAsync() async throws {
+        let starModelEntity = try await RKAssetLoader.loadModelEntityAsync(named: "gold_star")
+        
+        self.sceneAnchor.addChild(starModelEntity)
+        starModelEntity.position = [0, 0, -2]
+    }
+```
+
 
 To learn more about automatic reference counting, strong reference cycles, and closure capture lists, see this link:
 - [Swift Language Guide](https://docs.swift.org/swift-book/LanguageGuide/AutomaticReferenceCounting.html)

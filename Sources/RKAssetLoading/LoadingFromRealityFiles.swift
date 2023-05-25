@@ -67,3 +67,35 @@ public extension RKAssetLoader {
             }).store(in: &RKAssetLoader.cancellables)
     }
 }
+
+// MARK: - Async-Await
+@available(iOS 15.0, *)
+public extension RKAssetLoader {
+    @MainActor static func loadRealitySceneAsync(filename: String,
+                                      bundle: Bundle? = nil) async throws -> (Entity & HasAnchoring)
+    {
+        return try await Entity.loadAnchorAsync(named: filename, in: bundle).eraseToAnyPublisher().async()
+    }
+    
+    static func loadRealitySceneAsync(realityFileSceneURL: URL) async throws -> (Entity & HasAnchoring)
+    {
+        guard FileManager.default.fileExists(atPath: realityFileSceneURL.path) else {
+            print("No file exists at path \(realityFileSceneURL.path)")
+            throw URLError(.fileDoesNotExist)
+        }
+        return try await Entity.loadAnchorAsync(contentsOf: realityFileSceneURL).eraseToAnyPublisher().async()
+    }
+    
+    /// Use this function to access a particular scene from within a .reality file.
+    static func loadRealitySceneAsync(filename: String,
+                                      fileExtension: String = "reality",
+                                      sceneName: String) async throws -> (Entity & HasAnchoring)
+    {
+        guard let realityFileSceneURL = RKAssetLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
+            print("Error: Unable to find specified file in application bundle")
+            throw URLError(.badURL)
+        }
+        
+        return try await loadRealitySceneAsync(realityFileSceneURL: realityFileSceneURL)
+    }
+}

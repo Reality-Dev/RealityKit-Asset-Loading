@@ -54,3 +54,34 @@ public extension RKAssetLoader {
             }).store(in: &RKAssetLoader.cancellables)
     }
 }
+
+// MARK: - Async-Await
+@available(iOS 15.0, *)
+public extension RKAssetLoader {
+    
+    static func generateTextureAsync(from cgImage: CGImage,
+                                     withName resourceName: String? = nil,
+                                     options: TextureResource.CreateOptions = .init(semantic: .color)) async throws -> TextureResource {
+        return try await TextureResource.generateAsync(from: cgImage,
+                                      withName: resourceName,
+                                      options: options).eraseToAnyPublisher().async()
+        
+    }
+    
+    ///Loads a texture resource by name asynchronously.
+    @MainActor static func loadTextureAsync(named resourceName: String,
+                                 options: TextureResource.CreateOptions = .init(semantic: .color)) async throws -> TextureResource {
+        return try await TextureResource.loadAsync(named: resourceName,
+                                  options: options).eraseToAnyPublisher().async()
+    }
+    
+
+    static func loadTextureAsync(contentsOf url: URL,
+    named resourceName: String,
+    options: TextureResource.CreateOptions = .init(semantic: .color)) async throws -> TextureResource {
+
+        return try await TextureResource.loadAsync(contentsOf: url,
+                                                   withName: resourceName,
+                                                   options: options).eraseToAnyPublisher().async()
+    }
+}

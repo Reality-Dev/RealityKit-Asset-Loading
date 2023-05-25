@@ -14,6 +14,8 @@
 		555E0A9F2737944A0044E046 /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0A9E2737944A0044E046 /* toy_biplane.usdz */; };
 		555E0AA1273796820044E046 /* biped_robot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA0273796820044E046 /* biped_robot.usdz */; };
 		555E0AA32737A2C50044E046 /* audio_Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA22737A2C50044E046 /* audio_Loop.mp3 */; };
+		558DC7C52A1F11D00002F5C3 /* ARView+CompletionHandlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558DC7C42A1F11D00002F5C3 /* ARView+CompletionHandlers.swift */; };
+		558DC7C72A1F11D90002F5C3 /* ARView+AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558DC7C62A1F11D90002F5C3 /* ARView+AsyncAwait.swift */; };
 		55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 55C7AB27273757F800085161 /* Rocket_Project.rcproject */; };
 		55C7AB2A2737581700085161 /* Rocket.reality in Resources */ = {isa = PBXBuildFile; fileRef = 55C7AB292737581700085161 /* Rocket.reality */; };
 		55E3A5B025FEB8D5004E6A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55E3A5A825FEB8D5004E6A08 /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		555E0A9E2737944A0044E046 /* toy_biplane.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_biplane.usdz; sourceTree = "<group>"; };
 		555E0AA0273796820044E046 /* biped_robot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = biped_robot.usdz; sourceTree = "<group>"; };
 		555E0AA22737A2C50044E046 /* audio_Loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audio_Loop.mp3; sourceTree = "<group>"; };
+		558DC7C42A1F11D00002F5C3 /* ARView+CompletionHandlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARView+CompletionHandlers.swift"; sourceTree = "<group>"; };
+		558DC7C62A1F11D90002F5C3 /* ARView+AsyncAwait.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARView+AsyncAwait.swift"; sourceTree = "<group>"; };
 		55BFE66525D2200F00E2BB8C /* RealityKit-Asset-Loading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RealityKit-Asset-Loading.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C7AB27273757F800085161 /* Rocket_Project.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Rocket_Project.rcproject; sourceTree = "<group>"; };
 		55C7AB292737581700085161 /* Rocket.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rocket.reality; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 				553D699427373FA7001BA4ED /* Resources */,
 				55E3A5A925FEB8D5004E6A08 /* Preview Content */,
 				55E3A5AB25FEB8D5004E6A08 /* ARView.swift */,
+				558DC7C62A1F11D90002F5C3 /* ARView+AsyncAwait.swift */,
+				558DC7C42A1F11D00002F5C3 /* ARView+CompletionHandlers.swift */,
 				55E3A5AC25FEB8D5004E6A08 /* AppDelegate.swift */,
 				55E3A5AD25FEB8D5004E6A08 /* ContentView.swift */,
 				55E3A5AE25FEB8D5004E6A08 /* Info.plist */,
@@ -204,8 +210,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55E3A5B325FEB8D5004E6A08 /* AppDelegate.swift in Sources */,
+				558DC7C72A1F11D90002F5C3 /* ARView+AsyncAwait.swift in Sources */,
 				55E3A5B425FEB8D5004E6A08 /* ContentView.swift in Sources */,
 				55C7AB28273757F800085161 /* Rocket_Project.rcproject in Sources */,
+				558DC7C52A1F11D00002F5C3 /* ARView+CompletionHandlers.swift in Sources */,
 				55E3A5B225FEB8D5004E6A08 /* ARView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

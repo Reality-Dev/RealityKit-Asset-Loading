@@ -137,34 +137,63 @@ public extension RKAssetLoader {
                                        shouldLoop: Bool = false,
                                        completionHandler: @escaping (_ audioFileResource: AudioFileResource) -> Void)
     {
-        let loadRequest = RKAssetLoader.makeLoadRequest(contentsOf: url,
-                                                        withName: resourceName,
-                                                        inputMode: inputMode,
-                                                        loadingStrategy: loadingStrategy,
-                                                        shouldLoop: shouldLoop)
-
-        loadRequest
+        AudioFileResource.loadAsync(contentsOf: url,
+                                           withName: resourceName,
+                                           inputMode: inputMode,
+                                           loadingStrategy: loadingStrategy,
+                                           shouldLoop: shouldLoop)
             .sink(receiveValue: { audioFileResource in
                 completionHandler(audioFileResource)
 
             }).store(in: &RKAssetLoader.cancellables)
     }
+}
 
-    /// Makes an Asynchronous load request with predefined presets.
-    private static func makeLoadRequest(contentsOf url: URL,
-                                        withName resourceName: String? = nil,
-                                        inputMode: AudioResource.InputMode = .spatial,
-                                        loadingStrategy: AudioFileResource.LoadingStrategy = .preload,
-                                        shouldLoop: Bool = false) -> AnyPublisher<AudioFileResource, Error>
-    {
-        return AudioFileResource.loadAsync(contentsOf: url,
-                                           withName: resourceName,
-                                           inputMode: inputMode,
-                                           loadingStrategy: loadingStrategy,
-                                           shouldLoop: shouldLoop)
-            .tryMap { resource in
-                resource
+// MARK: - Async-Await
+@available(iOS 15.0, *)
+public extension RKAssetLoader {
+    @MainActor static func loadAudioAsync(audioFile: AudioFile) async throws -> AudioFileResource {
+        return try await loadAudioAsync(audioFile: audioFile, in: nil)
+    }
+    
+    @MainActor static func loadAudioAsync(audioFile: AudioFile,
+                               in bundle: Bundle? = nil) async throws -> AudioFileResource {
+        if let url = audioFile.url {
+            guard FileManager.default.fileExists(atPath: url.path) else {
+                print("No file exists at path \(url.path)")
+                throw AsyncError.finishedWithoutValue
             }
-            .eraseToAnyPublisher()
+            return try await AudioFileResource.loadAsync(contentsOf: url,
+                                                         withName: audioFile.resourceName,
+                                                         inputMode: audioFile.inputMode,
+                                                         loadingStrategy: audioFile.loadingStrategy,
+                                                         shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
+        }
+        return try await AudioFileResource.loadAsync(named: audioFile.resourceName,
+                                    in: bundle,
+                                    inputMode: audioFile.inputMode,
+                                    loadingStrategy: audioFile.loadingStrategy,
+                                    shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
+    }
+    
+    //ARRAY VERSION
+    /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and the main bundle.
+    @MainActor static func loadAudioFilesAsync(audioFiles: [AudioFile]) async throws -> [AudioFileResource] {
+        
+        var loadedResources: [AudioFileResource] = []
+        
+        try await withThrowingTaskGroup(of: AudioFileResource.self) { group in
+            for audioFile in audioFiles {
+                group.addTask {
+                    return try await loadAudioAsync(audioFile: audioFile)
+                }
+                
+                for try await result in group {
+                    loadedResources.append(result)
+                }
+            }
+        }
+        return loadedResources
     }
 }
+

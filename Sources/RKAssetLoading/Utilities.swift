@@ -42,9 +42,11 @@ public extension AnyPublisher {
                     switch result {
                     case .finished:
                         if finishedWithoutValue {
+                            Swift.print("Loading Failed")
                             continuation.resume(throwing: AsyncError.finishedWithoutValue)
                         }
                     case let .failure(error):
+                        Swift.print(error.localizedDescription)
                         continuation.resume(throwing: error)
                     }
                     cancellable?.cancel()
