@@ -64,7 +64,9 @@ extension ARSUIView {
                 print("Scene Loaded Asyncronously")
                 self?.rocketScene = scene
                 self?.scene.addAnchor(scene)
-                //                self?.sceneDidLoad()
+                
+                //Optionally, create another method to call upon successful loading.
+                // self?.sceneDidLoad()
             }
         }
         

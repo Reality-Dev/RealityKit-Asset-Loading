@@ -9,6 +9,57 @@ import Combine
 import Foundation
 import RealityKit
 
+// MARK: - Async-Await
+@available(iOS 15.0, *)
+public extension RKAssetLoader {
+    @MainActor static func loadAudioAsync(audioFile: AudioFile) async throws -> AudioFileResource {
+        return try await loadAudioAsync(audioFile: audioFile, in: nil)
+    }
+    
+    @MainActor static func loadAudioAsync(audioFile: AudioFile,
+                               in bundle: Bundle? = nil) async throws -> AudioFileResource {
+        if let url = audioFile.url {
+            guard FileManager.default.fileExists(atPath: url.path) else {
+                print("No file exists at path \(url.path)")
+                throw AsyncError.finishedWithoutValue
+            }
+            return try await AudioFileResource.loadAsync(contentsOf: url,
+                                                         withName: audioFile.resourceName,
+                                                         inputMode: audioFile.inputMode,
+                                                         loadingStrategy: audioFile.loadingStrategy,
+                                                         shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
+        }
+        return try await AudioFileResource.loadAsync(named: audioFile.resourceName,
+                                    in: bundle,
+                                    inputMode: audioFile.inputMode,
+                                    loadingStrategy: audioFile.loadingStrategy,
+                                    shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
+    }
+    
+    //ARRAY VERSION
+    /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and the main bundle.
+    @MainActor static func loadAudioFilesAsync(audioFiles: [AudioFile]) async throws -> [AudioFileResource] {
+        
+        var loadedResources: [AudioFileResource] = []
+        
+        try await withThrowingTaskGroup(of: AudioFileResource.self) { group in
+            for audioFile in audioFiles {
+                group.addTask {
+                    return try await loadAudioAsync(audioFile: audioFile)
+                }
+                
+                for try await result in group {
+                    loadedResources.append(result)
+                }
+            }
+        }
+        return loadedResources
+    }
+}
+
+
+
+// MARK: - Completion Closures
 public extension RKAssetLoader {
     struct AudioFile {
         var resourceName: String
@@ -148,52 +199,3 @@ public extension RKAssetLoader {
             }).store(in: &RKAssetLoader.cancellables)
     }
 }
-
-// MARK: - Async-Await
-@available(iOS 15.0, *)
-public extension RKAssetLoader {
-    @MainActor static func loadAudioAsync(audioFile: AudioFile) async throws -> AudioFileResource {
-        return try await loadAudioAsync(audioFile: audioFile, in: nil)
-    }
-    
-    @MainActor static func loadAudioAsync(audioFile: AudioFile,
-                               in bundle: Bundle? = nil) async throws -> AudioFileResource {
-        if let url = audioFile.url {
-            guard FileManager.default.fileExists(atPath: url.path) else {
-                print("No file exists at path \(url.path)")
-                throw AsyncError.finishedWithoutValue
-            }
-            return try await AudioFileResource.loadAsync(contentsOf: url,
-                                                         withName: audioFile.resourceName,
-                                                         inputMode: audioFile.inputMode,
-                                                         loadingStrategy: audioFile.loadingStrategy,
-                                                         shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
-        }
-        return try await AudioFileResource.loadAsync(named: audioFile.resourceName,
-                                    in: bundle,
-                                    inputMode: audioFile.inputMode,
-                                    loadingStrategy: audioFile.loadingStrategy,
-                                    shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
-    }
-    
-    //ARRAY VERSION
-    /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and the main bundle.
-    @MainActor static func loadAudioFilesAsync(audioFiles: [AudioFile]) async throws -> [AudioFileResource] {
-        
-        var loadedResources: [AudioFileResource] = []
-        
-        try await withThrowingTaskGroup(of: AudioFileResource.self) { group in
-            for audioFile in audioFiles {
-                group.addTask {
-                    return try await loadAudioAsync(audioFile: audioFile)
-                }
-                
-                for try await result in group {
-                    loadedResources.append(result)
-                }
-            }
-        }
-        return loadedResources
-    }
-}
-

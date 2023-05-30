@@ -61,7 +61,9 @@ class ARSUIView: ARView {
         loadMultipleEntitiesAtOnceWithFileNames()
 //        loadMultipleEntitiesAtOnceWithURLs()
 //        loadRocketFromRealityFile()
-//        loadRocketFromRealityComposerProject()
+        
+        //If the fire shows up but the rocket does not, open the RealityComposer project and download the rocket model into the project.
+        //loadRocketFromRealityComposerProject()
     }
     
     func enableOcclusion() {
