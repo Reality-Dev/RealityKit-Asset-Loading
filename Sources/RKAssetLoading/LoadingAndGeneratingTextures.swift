@@ -56,7 +56,7 @@ public extension RKAssetLoader {
 }
 
 // MARK: - Async-Await
-@available(iOS 15.0, *)
+@available(iOS 15.0, macOS 12.0, *)
 public extension RKAssetLoader {
     
     static func generateTextureAsync(from cgImage: CGImage,
