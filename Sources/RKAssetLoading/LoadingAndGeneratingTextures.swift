@@ -120,7 +120,7 @@ public extension RKAssetLoader {
         
         var cgImage: CGImage
         
-        init(cgImage: CGImage,
+        public init(cgImage: CGImage,
              resourceName: String? = nil,
              createOptions: TextureResource.CreateOptions?) {
             self.resourceName = resourceName
@@ -132,7 +132,7 @@ public extension RKAssetLoader {
     class TexDefFromName: TextureDefinition {
         var resourceName: String
         
-        init(resourceName: String,
+        public init(resourceName: String,
              createOptions: TextureResource.CreateOptions?) {
             self.resourceName = resourceName
             super.init(createOptions: createOptions)
@@ -142,7 +142,7 @@ public extension RKAssetLoader {
     class TexDefFromURL: TexDefFromName {
         var url: URL
         
-        init(url: URL,
+        public init(url: URL,
              resourceName: String,
                   createOptions: TextureResource.CreateOptions?) {
             self.url = url
