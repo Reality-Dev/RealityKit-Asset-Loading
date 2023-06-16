@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import RealityKit
 
 // From Apple's "Underwater" sample project.
 // This is used to handle the errors, if any, from loading an asset.
@@ -24,6 +25,19 @@ public extension Publisher {
             },
             receiveValue: receiveValue
         )
+    }
+}
+
+public extension RKAssetLoader {
+    static func loadMany<T>(requests: [LoadRequest<T>],
+                     completion: @escaping (([T]) -> Void)) {
+        Publishers.MergeMany(requests).collect()
+            .sink(receiveValue: { loadedAssets in
+                // The assets loaded successfully.
+                // Now we can make use of them.
+                completion(loadedAssets)
+
+            }).store(in: &RKAssetLoader.cancellables)
     }
 }
 

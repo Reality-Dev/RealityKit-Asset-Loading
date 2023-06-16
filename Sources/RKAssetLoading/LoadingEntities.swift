@@ -151,47 +151,9 @@ public extension RKAssetLoader {
     static func loadEntitiesAsync(entities: [(path: URL, name: String?)],
                                          completion: @escaping (([Entity]) -> Void))
     {
-        assert(entities.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
-
-        guard entities.count > 1,
-              let firstEntity = entities.first
-        else { return }
-        guard FileManager.default.fileExists(atPath: firstEntity.path.path) else {
-            print("No file exists at path \(firstEntity.path)")
-            return
-        }
-
-        var anyPublisher: AnyPublisher<Entity, Error>?
-        let firstPublisher = Entity.loadAsync(contentsOf: firstEntity.path, withName: firstEntity.name)
-        for i in 1 ..< entities.count {
-            let entity = entities[i]
-            guard FileManager.default.fileExists(atPath: entity.path.path) else {
-                print("No file exists at path \(entity.path)")
-                continue
-            }
-
-            if i == 1 {
-                anyPublisher = firstPublisher.append(Entity.loadAsync(contentsOf: entity.path, withName: entity.name))
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            } else {
-                anyPublisher = anyPublisher!.append(Entity.loadAsync(contentsOf: entity.path, withName: entity.name))
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            }
-        }
-        anyPublisher!
-            .collect()
-            .sink(receiveValue: { loadedEntities in
-                // The model loaded successfully.
-                // Now we can make use of it.
-                completion(loadedEntities)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        let loadPublishers = entities.map{Entity.loadAsync(contentsOf: $0.path, withName: $0.name)}
+        
+        loadMany(requests: loadPublishers, completion: completion)
     }
     
     //VARIADIC VERSION
@@ -215,37 +177,8 @@ public extension RKAssetLoader {
     static func loadEntitiesAsync(bundle: Bundle? = nil, entityNames: [String],
                                          completion: @escaping (([Entity]) -> Void))
     {
-        assert(entityNames.count > 1, "loadEntitiesAsync must use 2 or more entities. To load just one entity, use loadEntityAsync() instead.")
-
-        guard entityNames.count > 1,
-              let firstEntityName = entityNames.first
-        else { return }
-
-        var anyPublisher: AnyPublisher<Entity, Error>?
-        let firstPublisher = Entity.loadAsync(named: firstEntityName, in: bundle)
-        for i in 1 ..< entityNames.count {
-            let entityName = entityNames[i]
-            if i == 1 {
-                anyPublisher = firstPublisher.append(Entity.loadAsync(named: entityName, in: bundle))
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            } else {
-                anyPublisher = anyPublisher!.append(Entity.loadAsync(named: entityName, in: bundle))
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            }
-        }
-        anyPublisher!
-            .collect()
-            .sink(receiveValue: { loadedEntities in
-                // The model loaded successfully.
-                // Now we can make use of it.
-                completion(loadedEntities)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        let loadPublishers = entityNames.map{Entity.loadAsync(named: $0, in: bundle)}
+        
+        loadMany(requests: loadPublishers, completion: completion)
     }
 }

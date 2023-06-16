@@ -67,7 +67,7 @@ public extension RKAssetLoader {
         var inputMode: AudioResource.InputMode = .spatial
         var loadingStrategy: AudioFileResource.LoadingStrategy = .preload
         var shouldLoop: Bool
-
+        
         public init(resourceName: String,
                     url: URL? = nil,
                     inputMode: AudioResource.InputMode = .spatial,
@@ -79,6 +79,18 @@ public extension RKAssetLoader {
             self.inputMode = inputMode
             self.loadingStrategy = loadingStrategy
             self.shouldLoop = shouldLoop
+        }
+        
+        // If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
+        func publisher(bundle: Bundle? = nil) -> LoadRequest<AudioFileResource> {
+            if let url = url {
+                return AudioFileResource.loadAsync(contentsOf: url,
+                                                   withName: resourceName,
+                                                   inputMode: inputMode,
+                                                   loadingStrategy: loadingStrategy, shouldLoop: shouldLoop)
+            } else {
+                return AudioFileResource.loadAsync(named: resourceName, in: bundle, inputMode: inputMode, loadingStrategy: loadingStrategy, shouldLoop: shouldLoop)
+            }
         }
     }
     
@@ -101,56 +113,9 @@ public extension RKAssetLoader {
                                     audioFiles: [AudioFile],
                                     completion: @escaping (_ audioFileResources: [AudioFileResource]) -> Void)
     {
-        assert(audioFiles.count > 1, "loadAudioFilesAsync must use 2 or more audio files. To load just one file, use loadAudioAsync() instead.")
-
-        guard audioFiles.count > 1,
-              let firstFile = audioFiles.first
-        else { return }
-
-        var anyPublisher: AnyPublisher<AudioFileResource, Error>?
-        var firstPublisher: LoadRequest<AudioFileResource>
-        if let firstURL = firstFile.url {
-            firstPublisher = AudioFileResource.loadAsync(contentsOf: firstURL, withName: firstFile.resourceName, inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
-        } else {
-            firstPublisher = AudioFileResource.loadAsync(named: firstFile.resourceName, in: bundle, inputMode: firstFile.inputMode, loadingStrategy: firstFile.loadingStrategy, shouldLoop: firstFile.shouldLoop)
-        }
-
-        for i in 1 ..< audioFiles.count {
-            let audioFile = audioFiles[i]
-            if i == 1 {
-                var localPublisher: LoadRequest<AudioFileResource>
-                if let fileURL = audioFile.url {
-                    localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                } else {
-                    localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                }
-                anyPublisher = firstPublisher.append(localPublisher)
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            } else {
-                var localPublisher: LoadRequest<AudioFileResource>
-                if let fileURL = audioFile.url {
-                    localPublisher = AudioFileResource.loadAsync(contentsOf: fileURL, withName: audioFile.resourceName, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                } else {
-                    localPublisher = AudioFileResource.loadAsync(named: audioFile.resourceName, in: bundle, inputMode: audioFile.inputMode, loadingStrategy: audioFile.loadingStrategy, shouldLoop: audioFile.shouldLoop)
-                }
-                anyPublisher = anyPublisher?.append(localPublisher)
-                    .tryMap { resource in
-                        resource
-                    }
-                    .eraseToAnyPublisher()
-            }
-        }
-        anyPublisher!
-            .collect()
-            .sink(receiveValue: { loadedEntities in
-                // The model loaded successfully.
-                // Now we can make use of it.
-                completion(loadedEntities)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        let loadPublishers = audioFiles.map{$0.publisher(bundle: bundle)}
+        
+        loadMany(requests: loadPublishers, completion: completion)
     }
 
     static func loadAudioAsync(audioFile: AudioFile,
@@ -168,17 +133,17 @@ public extension RKAssetLoader {
                                          loadingStrategy: audioFile.loadingStrategy,
                                          shouldLoop: audioFile.shouldLoop,
                                          completionHandler: completionHandler)
-            return
-        }
-
-        AudioFileResource.loadAsync(named: audioFile.resourceName,
-                                    in: bundle,
-                                    inputMode: audioFile.inputMode,
-                                    loadingStrategy: audioFile.loadingStrategy,
-                                    shouldLoop: audioFile.shouldLoop)
+        } else {
+            
+            AudioFileResource.loadAsync(named: audioFile.resourceName,
+                                        in: bundle,
+                                        inputMode: audioFile.inputMode,
+                                        loadingStrategy: audioFile.loadingStrategy,
+                                        shouldLoop: audioFile.shouldLoop)
             .sink(receiveValue: { audioFileResource in
                 completionHandler(audioFileResource)
             }).store(in: &RKAssetLoader.cancellables)
+        }
     }
 
     private static func loadAudioAsync(contentsOf url: URL,
