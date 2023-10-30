@@ -22,7 +22,7 @@ public extension RKAssetLoader {
     /// See the example project in ARSUIViewBodyTrackedEntity for an example of how to use this.
     /// - Parameters:
     ///   - name: The name of the usdz file in the main bundle.
-    ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
+    ///   - completion: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
     @MainActor static func loadBodyTrackedEntityAsync(named name: String) async throws -> BodyTrackedEntity {
         
         return try await Entity.loadBodyTrackedAsync(named: name).eraseToAnyPublisher().async()
@@ -32,7 +32,7 @@ public extension RKAssetLoader {
     /// - Parameters:
     ///   - url: A file URL representing the file to load.
     ///   - resourceName: A unique name to assign to the loaded resource, for use in network synchronization.
-    ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
+    ///   - completion: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
     static func loadBodyTrackedEntityAsync(contentsOf url: URL, withName resourceName: String? = nil) async throws -> BodyTrackedEntity {
         
         return try await Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName).eraseToAnyPublisher().async()
@@ -47,28 +47,32 @@ public extension RKAssetLoader {
         /// See the example project in ARSUIViewBodyTrackedEntity for an example of how to use this.
         /// - Parameters:
         ///   - name: The name of the usdz file in the main bundle.
-        ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
-        static func loadBodyTrackedEntityAsync(named name: String, completionHandler: @escaping ((_ character: BodyTrackedEntity) -> Void)) {
-            Entity.loadBodyTrackedAsync(named: name).sink(
-                receiveValue: { bodyTrackedEntity in
-                    completionHandler(bodyTrackedEntity)
-                }).store(in: &RKAssetLoader.cancellables)
+        ///   - completion: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
+        static func loadBodyTrackedEntityAsync(named name: String,
+                                               errorHandler: RKErrorHandler? = nil,
+                                               completion: @escaping RKCompletionHandler<BodyTrackedEntity>) {
+            Entity.loadBodyTrackedAsync(named: name)
+                .sink(receiveValue: completion,
+                      errorHandler: errorHandler
+                ).store(in: &RKAssetLoader.cancellables)
         }
 
         /// Loads a body-tracked entity from a file URL asynchronously.
         /// - Parameters:
         ///   - url: A file URL representing the file to load.
         ///   - resourceName: A unique name to assign to the loaded resource, for use in network synchronization.
-        ///   - completionHandler: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
-        static func loadBodyTrackedEntityAsync(contentsOf url: URL, withName resourceName: String? = nil, completionHandler: @escaping ((_ character: BodyTrackedEntity) -> Void)) {
+        ///   - completion: Once the asset is done loading, the BodyTrackedEntity is passed in as a parameter to this closure.
+        static func loadBodyTrackedEntityAsync(contentsOf url: URL, withName resourceName: String? = nil,
+                                               errorHandler: RKErrorHandler? = nil,
+                                               completion: @escaping RKCompletionHandler<BodyTrackedEntity>) {
             guard FileManager.default.fileExists(atPath: url.path) else {
                 print("No file exists at path \(url.path)")
                 return
             }
             Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
-                .sink(receiveValue: { bodyTrackedEntity in
-                    completionHandler(bodyTrackedEntity)
-                }).store(in: &RKAssetLoader.cancellables)
+                .sink(receiveValue: completion,
+                      errorHandler: errorHandler
+                ).store(in: &RKAssetLoader.cancellables)
         }
     }
 

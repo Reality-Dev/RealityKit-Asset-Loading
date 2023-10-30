@@ -30,8 +30,6 @@ extension ARSUIView {
                 enableOcclusion()
     }
 
-
-    
     func loadOneEntityAsync() async throws {
         let capsuleModelEntity = try await RKAssetLoader.loadEntityAsync(named: "aluminum_capsule")
         

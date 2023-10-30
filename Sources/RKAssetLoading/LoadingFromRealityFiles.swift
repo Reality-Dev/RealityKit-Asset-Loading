@@ -67,37 +67,42 @@ public extension RKAssetLoader {
 
     static func loadRealitySceneAsync(filename: String,
                                       bundle: Bundle? = nil,
-                                      completion: @escaping (Swift.Result<(Entity & HasAnchoring)?, Swift.Error>) -> Void)
+                                      errorHandler: RKErrorHandler? = nil,
+                                      completion: @escaping RKCompletionHandler<Entity & HasAnchoring>)
     {
         Entity.loadAnchorAsync(named: filename, in: bundle)
-            .sink(receiveValue: { entity in
-                completion(.success(entity))
-            }).store(in: &RKAssetLoader.cancellables)
+            .sink(receiveValue: completion,
+                  errorHandler: errorHandler
+            ).store(in: &RKAssetLoader.cancellables)
     }
 
     /// Use this function to access a particular scene from within a .reality file.
     static func loadRealitySceneAsync(filename: String,
                                       fileExtension: String = "reality",
                                       sceneName: String,
-                                      completion: @escaping (Swift.Result<(Entity & HasAnchoring)?, Swift.Error>) -> Void)
+                                      errorHandler: RKErrorHandler? = nil,
+                                      completion: @escaping RKCompletionHandler<Entity & HasAnchoring>)
     {
         guard let realityFileSceneURL = RKAssetLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
             print("Error: Unable to find specified file in application bundle")
             return
         }
-        loadRealitySceneAsync(realityFileSceneURL: realityFileSceneURL, completion: completion)
+        loadRealitySceneAsync(realityFileSceneURL: realityFileSceneURL,
+                              errorHandler: errorHandler,
+                              completion: completion)
     }
 
     static func loadRealitySceneAsync(realityFileSceneURL: URL,
-                                      completion: @escaping (Swift.Result<(Entity & HasAnchoring)?, Swift.Error>) -> Void)
+                                      errorHandler: RKErrorHandler? = nil,
+                                      completion: @escaping RKCompletionHandler<Entity & HasAnchoring>)
     {
         guard FileManager.default.fileExists(atPath: realityFileSceneURL.path) else {
             print("No file exists at path \(realityFileSceneURL.path)")
             return
         }
         Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
-            .sink(receiveValue: { entity in
-                completion(.success(entity))
-            }).store(in: &RKAssetLoader.cancellables)
+            .sink(receiveValue: completion,
+                  errorHandler: errorHandler
+            ).store(in: &RKAssetLoader.cancellables)
     }
 }

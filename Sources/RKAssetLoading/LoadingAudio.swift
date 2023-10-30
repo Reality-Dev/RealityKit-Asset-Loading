@@ -93,34 +93,26 @@ public extension RKAssetLoader {
             }
         }
     }
-    
-    //VARIADIC VERSION
-    /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
-    ///
-    /// This function requires two or more audio files to load. If you would like to load one audio file, use `loadAudioAsync` instead.
-    static func loadAudioFilesAsync(in bundle: Bundle? = nil,
-                                    audioFiles: AudioFile...,
-                                    completion: @escaping (_ audioFileResources: [AudioFileResource]) -> Void)
-    {
-        loadAudioFilesAsync(in: bundle, audioFiles: audioFiles, completion: completion)
-    }
 
-    //ARRAY VERSION
     /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and bundle provided.
     ///
     /// This function requires two or more audio files to load. If you would like to load one audio file, use `loadAudioAsync` instead.
     static func loadAudioFilesAsync(in bundle: Bundle? = nil,
                                     audioFiles: [AudioFile],
-                                    completion: @escaping (_ audioFileResources: [AudioFileResource]) -> Void)
+                                    errorHandler: RKErrorHandler? = nil,
+                                    completion: @escaping RKCompletionHandler<[AudioFileResource]>)
     {
         let loadPublishers = audioFiles.map{$0.publisher(bundle: bundle)}
         
-        loadMany(requests: loadPublishers, completion: completion)
+        loadMany(requests: loadPublishers,
+                 completion: completion,
+                 errorHandler: errorHandler)
     }
 
     static func loadAudioAsync(audioFile: AudioFile,
                                in bundle: Bundle? = nil,
-                               completionHandler: @escaping (_ audioFileResource: AudioFileResource) -> Void)
+                               errorHandler: RKErrorHandler? = nil,
+                               completion: @escaping RKCompletionHandler<AudioFileResource>)
     {
         if let url = audioFile.url {
             guard FileManager.default.fileExists(atPath: url.path) else {
@@ -132,7 +124,8 @@ public extension RKAssetLoader {
                                          inputMode: audioFile.inputMode,
                                          loadingStrategy: audioFile.loadingStrategy,
                                          shouldLoop: audioFile.shouldLoop,
-                                         completionHandler: completionHandler)
+                                         errorHandler: errorHandler,
+                                         completion: completion)
         } else {
             
             AudioFileResource.loadAsync(named: audioFile.resourceName,
@@ -140,9 +133,9 @@ public extension RKAssetLoader {
                                         inputMode: audioFile.inputMode,
                                         loadingStrategy: audioFile.loadingStrategy,
                                         shouldLoop: audioFile.shouldLoop)
-            .sink(receiveValue: { audioFileResource in
-                completionHandler(audioFileResource)
-            }).store(in: &RKAssetLoader.cancellables)
+            .sink(receiveValue: completion,
+                  errorHandler: errorHandler
+            ).store(in: &RKAssetLoader.cancellables)
         }
     }
 
@@ -151,16 +144,16 @@ public extension RKAssetLoader {
                                        inputMode: AudioResource.InputMode = .spatial,
                                        loadingStrategy: AudioFileResource.LoadingStrategy = .preload,
                                        shouldLoop: Bool = false,
-                                       completionHandler: @escaping (_ audioFileResource: AudioFileResource) -> Void)
+                                       errorHandler: RKErrorHandler? = nil,
+                                       completion: @escaping RKCompletionHandler<AudioFileResource>)
     {
         AudioFileResource.loadAsync(contentsOf: url,
                                            withName: resourceName,
                                            inputMode: inputMode,
                                            loadingStrategy: loadingStrategy,
                                            shouldLoop: shouldLoop)
-            .sink(receiveValue: { audioFileResource in
-                completionHandler(audioFileResource)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        .sink(receiveValue: completion,
+              errorHandler: errorHandler
+        ).store(in: &RKAssetLoader.cancellables)
     }
 }

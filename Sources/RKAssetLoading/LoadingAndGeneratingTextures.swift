@@ -105,7 +105,7 @@ public extension RKAssetLoader {
     
     class TextureDefinition {
         
-        var createOptions: TextureResource.CreateOptions = .init(semantic: .color)
+        var createOptions: TextureResource.CreateOptions = .init(semantic: nil)
         
         init(createOptions: TextureResource.CreateOptions?) {
             if let createOptions {
@@ -154,35 +154,43 @@ public extension RKAssetLoader {
     // - Generating or Loading Multiple -
     
     static func generateTexturesAsync(bundle: Bundle? = nil, textures: [TexDefFromCGImage],
-                                  completion: @escaping (([TextureResource]) -> Void))
+                                      errorHandler: RKErrorHandler? = nil,
+                                      completion: @escaping RKCompletionHandler<[TextureResource]>)
     {
         let loadPublishers = textures.map{TextureResource.generateAsync(from: $0.cgImage,
                                                                         withName: $0.resourceName,
                                                                                options: $0.createOptions)}
-        
-        loadMany(requests: loadPublishers, completion: completion)
+        loadMany(requests: loadPublishers,
+                 completion: completion,
+                 errorHandler: errorHandler)
     }
     
     static func loadTexturesAsync(bundle: Bundle? = nil,
                                   textures: [TexDefFromName],
-                                  completion: @escaping (([TextureResource]) -> Void))
+                                  errorHandler: RKErrorHandler? = nil,
+                                  completion: @escaping RKCompletionHandler<[TextureResource]>)
     {
         let loadPublishers = textures.map{TextureResource.loadAsync(named: $0.resourceName,
                                                                             in: bundle,
                                                                     options: $0.createOptions)}
         
-        loadMany(requests: loadPublishers, completion: completion)
+        loadMany(requests: loadPublishers,
+                 completion: completion,
+                 errorHandler: errorHandler)
     }
     
     static func loadTexturesAsync(bundle: Bundle? = nil,
                                   textures: [TexDefFromURL],
-                                  completion: @escaping (([TextureResource]) -> Void))
+                                  errorHandler: RKErrorHandler? = nil,
+                                  completion: @escaping RKCompletionHandler<[TextureResource]>)
     {
         let loadPublishers = textures.map{TextureResource.loadAsync(contentsOf: $0.url,
                                                                     withName: $0.resourceName,
                                                                     options: $0.createOptions)}
         
-        loadMany(requests: loadPublishers, completion: completion)
+        loadMany(requests: loadPublishers,
+                 completion: completion,
+                 errorHandler: errorHandler)
     }
     
     
@@ -191,42 +199,45 @@ public extension RKAssetLoader {
     static func generateTextureAsync(from cgImage: CGImage,
                                      withName resourceName: String? = nil,
                                      options: TextureResource.CreateOptions = .init(semantic: .color),
-                                     completionHandler: @escaping ((_ texture: TextureResource) -> Void))
+                                     errorHandler: RKErrorHandler? = nil,
+                                     completion: @escaping RKCompletionHandler<TextureResource>)
     {
         TextureResource.generateAsync(from: cgImage,
                                       withName: resourceName,
                                       options: options)
-            .sink(receiveValue: { texture in
-                completionHandler(texture)
-
-            }).store(in: &RKAssetLoader.cancellables)
+            .sink(
+                receiveValue: completion,
+                errorHandler: errorHandler
+            ).store(in: &RKAssetLoader.cancellables)
     }
 
     static func loadTextureAsync(named resourceName: String,
                                  in bundle: Bundle? = nil,
                                  options: TextureResource.CreateOptions = .init(semantic: .color),
-                                 completionHandler: @escaping ((_ texture: TextureResource) -> Void))
+                                 errorHandler: RKErrorHandler? = nil,
+                                 completion: @escaping RKCompletionHandler<TextureResource>)
     {
         TextureResource.loadAsync(named: resourceName,
                                   in: bundle,
                                   options: options)
-            .sink(receiveValue: { texture in
-                completionHandler(texture)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        .sink(
+            receiveValue: completion,
+            errorHandler: errorHandler
+        ).store(in: &RKAssetLoader.cancellables)
     }
 
     static func loadTextureAsync(contentsOf url: URL,
                                  named resourceName: String,
                                  options: TextureResource.CreateOptions = .init(semantic: .color),
-                                 completionHandler: @escaping ((_ texture: TextureResource) -> Void))
+                                 errorHandler: RKErrorHandler? = nil,
+                                 completion: @escaping RKCompletionHandler<TextureResource>)
     {
         TextureResource.loadAsync(contentsOf: url,
                                   withName: resourceName,
                                   options: options)
-            .sink(receiveValue: { texture in
-                completionHandler(texture)
-
-            }).store(in: &RKAssetLoader.cancellables)
+        .sink(
+            receiveValue: completion,
+            errorHandler: errorHandler
+        ).store(in: &RKAssetLoader.cancellables)
     }
 }

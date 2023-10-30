@@ -18,16 +18,10 @@ extension ARSUIView {
         // This is another way to load content from Reality Composer projects other than the example given down below, since .rcproject files are turned into .reality files at build time.
         //        let fileName = "Rocket_Project"
         
-        RKAssetLoader.loadRealitySceneAsync(filename: fileName) { [weak self] result in
-            switch result {
-            case let .failure(error):
-                print("Unable to load the scene with error: ", error.localizedDescription)
-            case let .success(scene):
-                // Use the loaded content here.
-                // The scene comes as an AnchorEntity, and the entities (the rocket in this case) come as entities attached to that anchor, so we only need to add the anchor to the ARView's scene, and the other entities will therefore be added as children as well.
-                guard let scene = scene else { return }
-                self?.scene.addAnchor(scene)
-            }
+        RKAssetLoader.loadRealitySceneAsync(filename: fileName) { [weak self] loadedScene in
+            // Use the loaded content here.
+            // The scene comes as an AnchorEntity, and the entities (the rocket in this case) come as entities attached to that anchor, so we only need to add the anchor to the ARView's scene, and the other entities will therefore be added as children as well.
+            self?.scene.addAnchor(loadedScene)
         }
         
         enableOcclusion()
@@ -124,10 +118,13 @@ extension ARSUIView {
         // Pass in the names of the assets to load.
         // This function requires at least two entities and can load as many as you would like.
         RKAssetLoader.loadEntitiesAsync(entityNames:
-                                            "aluminum_capsule",
+                                            ["aluminum_capsule",
                                         "gold_star",
                                         "toy_biplane",
-                                        "aluminum_capsule")
+                                        "aluminum_capsule"],
+                                        errorHandler: { error in
+            assertionFailure("\(error)")
+        })
         { [weak self] entities in
             // Use the loaded assets here.
             for (index, entity) in entities.enumerated() {
@@ -166,10 +163,10 @@ extension ARSUIView {
         
         // Pass in the URLs and the names of the assets to load. This function requires at least two entities and can load as many as you would like.
         RKAssetLoader.loadEntitiesAsync(entities:
-                                            (path: capsulePath, name: nil),
+                                            [(path: capsulePath, name: nil),
                                         (path: starPath, name: "gold_star"),
                                         (path: ballPath, name: "toy_biplane"),
-                                        (path: capsulePath, name: "aluminum_capsule"))
+                                        (path: capsulePath, name: "aluminum_capsule")])
         { [weak self] entities in
             // Use the loaded assets here.
             for (index, entity) in entities.enumerated() {

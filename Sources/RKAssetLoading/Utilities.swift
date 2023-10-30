@@ -9,16 +9,22 @@ import Combine
 import Foundation
 import RealityKit
 
+public typealias RKErrorHandler = (Error) -> Void
+
+public typealias RKCompletionHandler<T> = (T) -> Void
+
 // From Apple's "Underwater" sample project.
 // This is used to handle the errors, if any, from loading an asset.
 public extension Publisher {
-    func sink(receiveValue: @escaping ((Self.Output) -> Void)) -> AnyCancellable {
+    func sink(receiveValue: @escaping ((Self.Output) -> Void),
+              errorHandler: RKErrorHandler?) -> AnyCancellable {
         sink(
             receiveCompletion: { result in
                 switch result {
                 case let .failure(error):
                     Swift.print("Error loading asset")
                     Swift.print(error)
+                    errorHandler?(error)
                 default:
                     return
                 }
@@ -30,14 +36,12 @@ public extension Publisher {
 
 public extension RKAssetLoader {
     static func loadMany<T>(requests: [LoadRequest<T>],
-                     completion: @escaping (([T]) -> Void)) {
+                            completion: @escaping (([T]) -> Void),
+                            errorHandler: RKErrorHandler?) {
         Publishers.MergeMany(requests).collect()
-            .sink(receiveValue: { loadedAssets in
-                // The assets loaded successfully.
-                // Now we can make use of them.
-                completion(loadedAssets)
-
-            }).store(in: &RKAssetLoader.cancellables)
+            .sink(receiveValue: completion,
+                  errorHandler: errorHandler
+            ).store(in: &RKAssetLoader.cancellables)
     }
 }
 

@@ -53,14 +53,14 @@ class ARSUIView: ARView {
         
         // Uncomment this code to try out the different loading methods.
         
-//        makeSimpleShapes()
-//        loadAudioFile()
-//        loadOneEntity()
-//        loadOneModelEntity()
-//        loadBodyTrackedEntity()
+        makeSimpleShapes()
+        loadAudioFile()
+        loadOneEntity()
+        loadOneModelEntity()
+        loadBodyTrackedEntity()
         loadMultipleEntitiesAtOnceWithFileNames()
-//        loadMultipleEntitiesAtOnceWithURLs()
-//        loadRocketFromRealityFile()
+        loadMultipleEntitiesAtOnceWithURLs()
+        loadRocketFromRealityFile()
         
         //If the fire shows up but the rocket does not, open the RealityComposer project and download the rocket model into the project.
         //loadRocketFromRealityComposerProject()
