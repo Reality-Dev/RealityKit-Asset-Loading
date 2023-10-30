@@ -14,7 +14,7 @@ import RealityKit
 
 // MARK: - Async-Await
 @available(iOS 15.0, *)
-public extension RKAssetLoader {
+public extension RKLoader {
     
     /// Asynchronously loads the 3D character.
     ///
@@ -40,7 +40,7 @@ public extension RKAssetLoader {
 }
 
 // MARK: - Completion Closures
-    public extension RKAssetLoader {
+    public extension RKLoader {
         /// Asynchronously loads the 3D character.
         ///
         /// Asynchronous loading prevents our app from freezing while waiting for the loading task to complete.
@@ -54,7 +54,7 @@ public extension RKAssetLoader {
             Entity.loadBodyTrackedAsync(named: name)
                 .sink(receiveValue: completion,
                       errorHandler: errorHandler
-                ).store(in: &RKAssetLoader.cancellables)
+                ).store(in: &RKLoader.cancellables)
         }
 
         /// Loads a body-tracked entity from a file URL asynchronously.
@@ -72,7 +72,7 @@ public extension RKAssetLoader {
             Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
                 .sink(receiveValue: completion,
                       errorHandler: errorHandler
-                ).store(in: &RKAssetLoader.cancellables)
+                ).store(in: &RKLoader.cancellables)
         }
     }
 

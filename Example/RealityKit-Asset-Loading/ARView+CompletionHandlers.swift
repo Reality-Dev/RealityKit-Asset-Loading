@@ -7,7 +7,7 @@
 
 import ARKit
 import RealityKit
-import RKAssetLoading
+import RKLoader
 import RKUtilities
 
 extension ARSUIView {
@@ -18,7 +18,7 @@ extension ARSUIView {
         // This is another way to load content from Reality Composer projects other than the example given down below, since .rcproject files are turned into .reality files at build time.
         //        let fileName = "Rocket_Project"
         
-        RKAssetLoader.loadRealitySceneAsync(filename: fileName) { [weak self] loadedScene in
+        RKLoader.loadRealitySceneAsync(filename: fileName) { [weak self] loadedScene in
             // Use the loaded content here.
             // The scene comes as an AnchorEntity, and the entities (the rocket in this case) come as entities attached to that anchor, so we only need to add the anchor to the ARView's scene, and the other entities will therefore be added as children as well.
             self?.scene.addAnchor(loadedScene)
@@ -72,14 +72,14 @@ extension ARSUIView {
 
     
     func loadOneEntity() {
-        RKAssetLoader.loadEntityAsync(named: "aluminum_capsule") { [weak self] capsuleModelEntity in
+        RKLoader.loadEntityAsync(named: "aluminum_capsule") { [weak self] capsuleModelEntity in
             self?.sceneAnchor.addChild(capsuleModelEntity)
             capsuleModelEntity.position = [0, 0, -2]
         }
     }
     
     func loadOneModelEntity() {
-        RKAssetLoader.loadModelEntityAsync(named: "gold_star") { [weak self] starModelEntity in
+        RKLoader.loadModelEntityAsync(named: "gold_star") { [weak self] starModelEntity in
             self?.sceneAnchor.addChild(starModelEntity)
             starModelEntity.position = [0, 0, -2]
         }
@@ -91,7 +91,7 @@ extension ARSUIView {
         let btConfig = ARBodyTrackingConfiguration()
         session.run(btConfig)
         
-        RKAssetLoader.loadBodyTrackedEntityAsync(named: "biped_robot") { [weak self] robot in
+        RKLoader.loadBodyTrackedEntityAsync(named: "biped_robot") { [weak self] robot in
             let bodyAnchor = AnchorEntity(.body)
             self?.scene.addAnchor(bodyAnchor)
             bodyAnchor.addChild(robot)
@@ -101,8 +101,8 @@ extension ARSUIView {
     
     func loadAudioFile() {
         guard let audioURL = Bundle.main.url(forResource: "audio_Loop", withExtension: "mp3") else { return }
-        let audioFile = RKAssetLoader.AudioFile(resourceName: "audio_Loop", url: audioURL, shouldLoop: true)
-        RKAssetLoader.loadAudioAsync(audioFile: audioFile) { [weak self] audio in
+        let audioFile = RKLoader.AudioFile(resourceName: "audio_Loop", url: audioURL, shouldLoop: true)
+        RKLoader.loadAudioAsync(audioFile: audioFile) { [weak self] audio in
             let audioEntity = ModelEntity.makeSphere(radius: 0.1)
             self?.sceneAnchor.addChild(audioEntity)
             audioEntity.position = [0, 0, -1]
@@ -117,7 +117,7 @@ extension ARSUIView {
         
         // Pass in the names of the assets to load.
         // This function requires at least two entities and can load as many as you would like.
-        RKAssetLoader.loadEntitiesAsync(entityNames:
+        RKLoader.loadEntitiesAsync(entityNames:
                                             ["aluminum_capsule",
                                         "gold_star",
                                         "toy_biplane",
@@ -162,7 +162,7 @@ extension ARSUIView {
         // There is also a ModelEntity version of this function.
         
         // Pass in the URLs and the names of the assets to load. This function requires at least two entities and can load as many as you would like.
-        RKAssetLoader.loadEntitiesAsync(entities:
+        RKLoader.loadEntitiesAsync(entities:
                                             [(path: capsulePath, name: nil),
                                         (path: starPath, name: "gold_star"),
                                         (path: ballPath, name: "toy_biplane"),

@@ -55,7 +55,7 @@ Add the URL of this repository to your Xcode 11+ Project under:
 
 ## Usage
 
-Add `import RKAssetLoading` to the top of your swift file to start.
+Add `import RKLoader` to the top of your swift file to start.
 
 ### Important:
 
@@ -69,7 +69,7 @@ Add `import RKAssetLoading` to the top of your swift file to start.
 - Your completion handlers should use a capture list such as `[weak self]` to avoid a memory leak from the completion closure capturing a strong reference to any objects. Here is an example of using this asset loader with a capture list:
 ``` swift
     func loadOneModelEntity(){
-        RKAssetLoader.loadModelEntityAsync(named: "gold_star"){[weak self] starModelEntity in
+        RKLoader.loadModelEntityAsync(named: "gold_star"){[weak self] starModelEntity in
         
             self?.sceneAnchor.addChild(starModelEntity)
             starModelEntity.position = [0, 0, -2]
@@ -80,7 +80,7 @@ Add `import RKAssetLoading` to the top of your swift file to start.
 Here is the async-await version of that call:
 ``` swift
     func loadOneModelEntityAsync() async throws {
-        let starModelEntity = try await RKAssetLoader.loadModelEntityAsync(named: "gold_star")
+        let starModelEntity = try await RKLoader.loadModelEntityAsync(named: "gold_star")
         
         self.sceneAnchor.addChild(starModelEntity)
         starModelEntity.position = [0, 0, -2]
@@ -100,7 +100,7 @@ The ARView file in the example project is especially helpful:
 
 ### Audio
 
-When initializing an `RKAssetLoader.AudioFile` to use for loading audio you may use either the URL of the file on disk or the resource name in the given bundle. If the URL is non-nil, then the file will be loaded from the URL by default. If you are using `resourceName`, then leave the URL as nil, and be sure to include the file extension in the `resourceName` like this: `"myAudio.mp3"`.
+When initializing an `RKLoader.AudioFile` to use for loading audio you may use either the URL of the file on disk or the resource name in the given bundle. If the URL is non-nil, then the file will be loaded from the URL by default. If you are using `resourceName`, then leave the URL as nil, and be sure to include the file extension in the `resourceName` like this: `"myAudio.mp3"`.
 
 
 ## More

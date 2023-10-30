@@ -12,7 +12,7 @@ import RealityKit
 
 // MARK: - Async-Await
 @available(iOS 15.0, macOS 12.0, *)
-public extension RKAssetLoader {
+public extension RKLoader {
     
     // - Generating or Loading Multiple -
     
@@ -101,7 +101,7 @@ public extension RKAssetLoader {
 
 // MARK: - Completion Closures
 @available(macOS 12.0, iOS 15.0, *)
-public extension RKAssetLoader {
+public extension RKLoader {
     
     class TextureDefinition {
         
@@ -208,7 +208,7 @@ public extension RKAssetLoader {
             .sink(
                 receiveValue: completion,
                 errorHandler: errorHandler
-            ).store(in: &RKAssetLoader.cancellables)
+            ).store(in: &RKLoader.cancellables)
     }
 
     static func loadTextureAsync(named resourceName: String,
@@ -223,7 +223,7 @@ public extension RKAssetLoader {
         .sink(
             receiveValue: completion,
             errorHandler: errorHandler
-        ).store(in: &RKAssetLoader.cancellables)
+        ).store(in: &RKLoader.cancellables)
     }
 
     static func loadTextureAsync(contentsOf url: URL,
@@ -238,6 +238,6 @@ public extension RKAssetLoader {
         .sink(
             receiveValue: completion,
             errorHandler: errorHandler
-        ).store(in: &RKAssetLoader.cancellables)
+        ).store(in: &RKLoader.cancellables)
     }
 }

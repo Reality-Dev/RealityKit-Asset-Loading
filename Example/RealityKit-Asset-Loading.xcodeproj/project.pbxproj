@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5536F50A29E5D457001B09A7 /* RKAssetLoading in Frameworks */ = {isa = PBXBuildFile; productRef = 5536F50929E5D457001B09A7 /* RKAssetLoading */; };
 		553D698827372202001BA4ED /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 553D698727372202001BA4ED /* README.md */; };
 		553D699127373FA4001BA4ED /* aluminum_capsule.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 553D698E27373FA4001BA4ED /* aluminum_capsule.usdz */; };
 		553D699227373FA4001BA4ED /* gold_star.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 553D698F27373FA4001BA4ED /* gold_star.usdz */; };
+		555917F12AF05B5C00A947B2 /* RKLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 555917F02AF05B5C00A947B2 /* RKLoader */; };
 		555E0A9F2737944A0044E046 /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0A9E2737944A0044E046 /* toy_biplane.usdz */; };
 		555E0AA1273796820044E046 /* biped_robot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA0273796820044E046 /* biped_robot.usdz */; };
 		555E0AA32737A2C50044E046 /* audio_Loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 555E0AA22737A2C50044E046 /* audio_Loop.mp3 */; };
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5536F50A29E5D457001B09A7 /* RKAssetLoading in Frameworks */,
+				555917F12AF05B5C00A947B2 /* RKLoader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +147,7 @@
 			);
 			name = "RealityKit-Asset-Loading";
 			packageProductDependencies = (
-				5536F50929E5D457001B09A7 /* RKAssetLoading */,
+				555917F02AF05B5C00A947B2 /* RKLoader */,
 			);
 			productName = "Sound Localization";
 			productReference = 55BFE66525D2200F00E2BB8C /* RealityKit-Asset-Loading.app */;
@@ -405,9 +405,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5536F50929E5D457001B09A7 /* RKAssetLoading */ = {
+		555917F02AF05B5C00A947B2 /* RKLoader */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = RKAssetLoading;
+			productName = RKLoader;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

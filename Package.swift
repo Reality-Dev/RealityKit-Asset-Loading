@@ -4,16 +4,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "RKAssetLoading",
+    name: "RKLoader",
     platforms: [.iOS("13.0"), .macOS(.v10_15)],
     products: [
-        .library(name: "RKAssetLoading", targets: ["RKAssetLoading"]),
+        .library(name: "RKLoader", targets: ["RKLoader"]),
     ],
     dependencies: [
         .package(name: "RKUtilities", url: "https://github.com/Reality-Dev/RealityKit-Utilities", from: "1.0.0"),
     ],
     targets: [
-        .target(name: "RKAssetLoading",
+        .target(name: "RKLoader",
                 dependencies: [.product(name: "RKUtilities", package: "RKUtilities")]),
     ],
     swiftLanguageVersions: [.v5]

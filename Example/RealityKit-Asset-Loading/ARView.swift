@@ -4,7 +4,6 @@
 //  Created by Grant Jarvis
 //
 
-
 import RealityKit
 import ARKit
 

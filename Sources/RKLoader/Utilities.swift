@@ -34,14 +34,14 @@ public extension Publisher {
     }
 }
 
-public extension RKAssetLoader {
+public extension RKLoader {
     static func loadMany<T>(requests: [LoadRequest<T>],
                             completion: @escaping (([T]) -> Void),
                             errorHandler: RKErrorHandler?) {
         Publishers.MergeMany(requests).collect()
             .sink(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKAssetLoader.cancellables)
+            ).store(in: &RKLoader.cancellables)
     }
 }
 

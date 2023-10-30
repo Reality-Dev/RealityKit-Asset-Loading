@@ -7,6 +7,21 @@
 		<key>RKAssetLoading.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>RKLoader-Package.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>RKLoader.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>RealityKit-Asset-Loading-Package.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 		<key>RealityKit-Asset-Loading.xcscheme_^#shared#^_</key>
@@ -23,6 +38,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>RKAssetLoading</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>RKLoader</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -5,7 +5,7 @@
 //  Created by Grant Jarvis on 5/24/23.
 //
 
-import RKAssetLoading
+import RKLoader
 import RKUtilities
 import RealityKit
 import ARKit
@@ -20,7 +20,7 @@ extension ARSUIView {
         // This is another way to load content from Reality Composer projects other than the example given down below, since .rcproject files are turned into .reality files at build time.
         //        let fileName = "Rocket_Project"
         
-                let loadedScene = try await RKAssetLoader.loadRealitySceneAsync(filename: fileName)
+                let loadedScene = try await RKLoader.loadRealitySceneAsync(filename: fileName)
                 
                 // Use the loaded content here.
                 // The scene comes as an AnchorEntity, and the entities (the rocket in this case) come as entities attached to that anchor, so we only need to add the anchor to the ARView's scene, and the other entities will therefore be added as children as well.
@@ -31,14 +31,14 @@ extension ARSUIView {
     }
 
     func loadOneEntityAsync() async throws {
-        let capsuleModelEntity = try await RKAssetLoader.loadEntityAsync(named: "aluminum_capsule")
+        let capsuleModelEntity = try await RKLoader.loadEntityAsync(named: "aluminum_capsule")
         
         self.sceneAnchor.addChild(capsuleModelEntity)
         capsuleModelEntity.position = [0, 0, -2]
     }
     
     func loadOneModelEntityAsync() async throws {
-        let starModelEntity = try await RKAssetLoader.loadModelEntityAsync(named: "gold_star")
+        let starModelEntity = try await RKLoader.loadModelEntityAsync(named: "gold_star")
         
         self.sceneAnchor.addChild(starModelEntity)
         starModelEntity.position = [0, 0, -2]
@@ -50,7 +50,7 @@ extension ARSUIView {
         let btConfig = ARBodyTrackingConfiguration()
         session.run(btConfig)
         
-        let robot = try await RKAssetLoader.loadBodyTrackedEntityAsync(named: "biped_robot")
+        let robot = try await RKLoader.loadBodyTrackedEntityAsync(named: "biped_robot")
         
         let bodyAnchor = AnchorEntity(.body)
         self.scene.addAnchor(bodyAnchor)
@@ -60,9 +60,9 @@ extension ARSUIView {
     
     func loadAudioFileAsync() async throws {
         guard let audioURL = Bundle.main.url(forResource: "audio_Loop", withExtension: "mp3") else { return }
-        let audioFile = RKAssetLoader.AudioFile(resourceName: "audio_Loop", url: audioURL, shouldLoop: true)
+        let audioFile = RKLoader.AudioFile(resourceName: "audio_Loop", url: audioURL, shouldLoop: true)
         
-        let audio = try await RKAssetLoader.loadAudioAsync(audioFile: audioFile)
+        let audio = try await RKLoader.loadAudioAsync(audioFile: audioFile)
         
         let audioEntity = ModelEntity.makeSphere(radius: 0.1)
         self.sceneAnchor.addChild(audioEntity)
@@ -75,7 +75,7 @@ extension ARSUIView {
         
             // Pass in the names of the assets to load.
             // This function requires at least two entities and can load as many as you would like.
-            let entities = try await RKAssetLoader.loadEntitiesAsync(entityNames:
+            let entities = try await RKLoader.loadEntitiesAsync(entityNames:
                                                                         ["aluminum_capsule",
                                                                          "gold_star",
                                                                          "toy_biplane",
@@ -106,7 +106,7 @@ extension ARSUIView {
         // There is also a ModelEntity version of this function.
         
         // Pass in the URLs and the names of the assets to load. This function requires at least two entities and can load as many as you would like.
-        let entities = try await RKAssetLoader.loadEntitiesAsync(entities:
+        let entities = try await RKLoader.loadEntitiesAsync(entities:
                                             [(path: capsulePath, name: nil),
                                         (path: starPath, name: "gold_star"),
                                         (path: ballPath, name: "toy_biplane"),

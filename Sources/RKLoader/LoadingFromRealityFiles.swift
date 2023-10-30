@@ -11,7 +11,7 @@ import RealityKit
 
 // MARK: - Async-Await
 @available(iOS 15.0, *)
-public extension RKAssetLoader {
+public extension RKLoader {
     @MainActor static func loadRealitySceneAsync(filename: String,
                                       bundle: Bundle? = nil) async throws -> (Entity & HasAnchoring)
     {
@@ -32,7 +32,7 @@ public extension RKAssetLoader {
                                       fileExtension: String = "reality",
                                       sceneName: String) async throws -> (Entity & HasAnchoring)
     {
-        guard let realityFileSceneURL = RKAssetLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
+        guard let realityFileSceneURL = RKLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
             print("Error: Unable to find specified file in application bundle")
             throw URLError(.badURL)
         }
@@ -42,7 +42,7 @@ public extension RKAssetLoader {
 }
 
 // MARK: - Completion Closures
-public extension RKAssetLoader {
+public extension RKLoader {
     
     // This code came from:
     // https://developer.apple.com/documentation/realitykit/creating_3d_content_with_reality_composer/loading_reality_composer_files_manually_without_generated_code
@@ -73,7 +73,7 @@ public extension RKAssetLoader {
         Entity.loadAnchorAsync(named: filename, in: bundle)
             .sink(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKAssetLoader.cancellables)
+            ).store(in: &RKLoader.cancellables)
     }
 
     /// Use this function to access a particular scene from within a .reality file.
@@ -83,7 +83,7 @@ public extension RKAssetLoader {
                                       errorHandler: RKErrorHandler? = nil,
                                       completion: @escaping RKCompletionHandler<Entity & HasAnchoring>)
     {
-        guard let realityFileSceneURL = RKAssetLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
+        guard let realityFileSceneURL = RKLoader.createRealityURL(filename: filename, fileExtension: fileExtension, sceneName: sceneName) else {
             print("Error: Unable to find specified file in application bundle")
             return
         }
@@ -103,6 +103,6 @@ public extension RKAssetLoader {
         Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
             .sink(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKAssetLoader.cancellables)
+            ).store(in: &RKLoader.cancellables)
     }
 }

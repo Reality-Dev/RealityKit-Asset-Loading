@@ -11,7 +11,7 @@ import RealityKit
 
 // MARK: - Async-Await
 @available(iOS 15.0, *)
-public extension RKAssetLoader {
+public extension RKLoader {
     @MainActor static func loadAudioAsync(audioFile: AudioFile) async throws -> AudioFileResource {
         return try await loadAudioAsync(audioFile: audioFile, in: nil)
     }
@@ -60,7 +60,7 @@ public extension RKAssetLoader {
 
 
 // MARK: - Completion Closures
-public extension RKAssetLoader {
+public extension RKLoader {
     struct AudioFile {
         var resourceName: String
         var url: URL?
@@ -119,7 +119,7 @@ public extension RKAssetLoader {
                 print("No file exists at path \(url.path)")
                 return
             }
-            RKAssetLoader.loadAudioAsync(contentsOf: url,
+            RKLoader.loadAudioAsync(contentsOf: url,
                                          withName: audioFile.resourceName,
                                          inputMode: audioFile.inputMode,
                                          loadingStrategy: audioFile.loadingStrategy,
@@ -135,7 +135,7 @@ public extension RKAssetLoader {
                                         shouldLoop: audioFile.shouldLoop)
             .sink(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKAssetLoader.cancellables)
+            ).store(in: &RKLoader.cancellables)
         }
     }
 
@@ -154,6 +154,6 @@ public extension RKAssetLoader {
                                            shouldLoop: shouldLoop)
         .sink(receiveValue: completion,
               errorHandler: errorHandler
-        ).store(in: &RKAssetLoader.cancellables)
+        ).store(in: &RKLoader.cancellables)
     }
 }
