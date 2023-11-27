@@ -45,22 +45,13 @@ public extension RKLoader {
     ///   - bundle: The bundle containing the file. Use nil or omit this parameter to search the app’s main bundle.
     ///   - entityNames: The file names of the entities to load, without the ".usdz" file extension.
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
-    @MainActor static func loadModelEntitiesAsync(bundle: Bundle? = nil, entityNames: [String]) async throws -> [ModelEntity]
+    @MainActor static func loadModelEntitiesAsync(entityNames: [String]) async throws -> [ModelEntity]
     {
-        var loadedEntities: [ModelEntity] = []
-        
-        try await withThrowingTaskGroup(of: ModelEntity.self) { group in
-            for entityName in entityNames {
-                group.addTask {
-                    return try await loadModelEntityAsync(named: entityName)
-                }
-                
-                for try await result in group {
-                    loadedEntities.append(result)
-                }
-            }
+        let tasks = entityNames.map { entityName in
+            { try await loadModelEntityAsync(named: entityName) }
         }
-        return loadedEntities
+        
+        return try await loadMany(tasks: tasks)
     }
     
     /// For use with loading two or more entities at a time using the URL of the file on disk. You may load as many as you would like.
@@ -69,20 +60,11 @@ public extension RKLoader {
     ///   - completion: Once the entities are done loading, they are passed as an array parameter into this closure.
     @MainActor static func loadModelEntitiesAsync(entities: [(path: URL, name: String?)]) async throws -> [ModelEntity]
     {
-        var loadedEntities: [ModelEntity] = []
-        
-        try await withThrowingTaskGroup(of: ModelEntity.self) { group in
-            for entityData in entities {
-                group.addTask {
-                    return try await loadModelEntityAsync(path: entityData.path, named: entityData.name)
-                }
-                
-                for try await result in group {
-                    loadedEntities.append(result)
-                }
-            }
+        let tasks = entities.map { entityData in
+            { try await loadModelEntityAsync(path: entityData.path, named: entityData.name) }
         }
-        return loadedEntities
+        
+        return try await loadMany(tasks: tasks)
     }
 }
 

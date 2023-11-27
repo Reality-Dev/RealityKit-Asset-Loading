@@ -36,24 +36,14 @@ public extension RKLoader {
                                     shouldLoop: audioFile.shouldLoop).eraseToAnyPublisher().async()
     }
     
-    //ARRAY VERSION
     /// If an AudioFile's url is non-nil, it will be loaded from that url, otherwise it will be loaded from the resourceName and the main bundle.
     @MainActor static func loadAudioFilesAsync(audioFiles: [AudioFile]) async throws -> [AudioFileResource] {
         
-        var loadedResources: [AudioFileResource] = []
-        
-        try await withThrowingTaskGroup(of: AudioFileResource.self) { group in
-            for audioFile in audioFiles {
-                group.addTask {
-                    return try await loadAudioAsync(audioFile: audioFile)
-                }
-                
-                for try await result in group {
-                    loadedResources.append(result)
-                }
-            }
+        let tasks = audioFiles.map { audioFile in
+            { try await loadAudioAsync(audioFile: audioFile) }
         }
-        return loadedResources
+            
+        return try await loadMany(tasks: tasks)
     }
 }
 

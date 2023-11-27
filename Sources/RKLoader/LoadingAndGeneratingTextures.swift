@@ -16,58 +16,35 @@ public extension RKLoader {
     
     // - Generating or Loading Multiple -
     
-    @MainActor static func generateTexturesAsync(bundle: Bundle? = nil, textures: [TexDefFromCGImage]) async throws -> [TextureResource]
+    @MainActor static func generateTexturesAsync(textures: [TexDefFromCGImage]) async throws -> [TextureResource]
     {
-        var loadedEntities: [TextureResource] = []
-        
-        try await withThrowingTaskGroup(of: TextureResource.self) { group in
-            for texture in textures {
-                group.addTask {
-                    return try await generateTextureAsync(from: texture.cgImage, withName: texture.resourceName, options: texture.createOptions)
-                }
-                
-                for try await result in group {
-                    loadedEntities.append(result)
-                }
+        let tasks = textures.map { texture in
+            { try await generateTextureAsync(from: texture.cgImage, withName: texture.resourceName, options: texture.createOptions)
             }
         }
-        return loadedEntities
+            
+        return try await loadMany(tasks: tasks)
     }
     
     @MainActor static func loadTexturesAsync(bundle: Bundle? = nil, textures: [TexDefFromName]) async throws -> [TextureResource]
     {
-        var loadedEntities: [TextureResource] = []
-        
-        try await withThrowingTaskGroup(of: TextureResource.self) { group in
-            for texture in textures {
-                group.addTask {
-                    return try await loadTextureAsync(named: texture.resourceName, options: texture.createOptions)
-                }
-                
-                for try await result in group {
-                    loadedEntities.append(result)
-                }
+        let tasks = textures.map { texture in
+            { try await loadTextureAsync(named: texture.resourceName, options: texture.createOptions)
             }
         }
-        return loadedEntities
+            
+        return try await loadMany(tasks: tasks)
     }
     
     @MainActor static func loadTexturesAsync(bundle: Bundle? = nil, textures: [TexDefFromURL]) async throws -> [TextureResource]
     {
-        var loadedEntities: [TextureResource] = []
         
-        try await withThrowingTaskGroup(of: TextureResource.self) { group in
-            for texture in textures {
-                group.addTask {
-                    return try await loadTextureAsync(contentsOf: texture.url, named: texture.resourceName, options: texture.createOptions)
-                }
-                
-                for try await result in group {
-                    loadedEntities.append(result)
-                }
+        let tasks = textures.map { texture in
+            { try await loadTextureAsync(contentsOf: texture.url, named: texture.resourceName, options: texture.createOptions)
             }
         }
-        return loadedEntities
+            
+        return try await loadMany(tasks: tasks)
     }
     
     // - Generating or Loading Singluar -

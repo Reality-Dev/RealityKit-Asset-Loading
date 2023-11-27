@@ -35,6 +35,19 @@ public extension Publisher {
 }
 
 public extension RKLoader {
+    
+    static func loadMany<T>(tasks: [() async throws -> T]) async throws -> [T] {
+        return try await withThrowingTaskGroup(of: T.self) { group -> [T] in
+            for task in tasks {
+                group.addTask {
+                    try await task()
+                }
+            }
+
+            return try await group.reduce(into: [T]()) { $0.append($1) }
+        }
+    }
+    
     static func loadMany<T>(requests: [LoadRequest<T>],
                             completion: @escaping (([T]) -> Void),
                             errorHandler: RKErrorHandler?) {
