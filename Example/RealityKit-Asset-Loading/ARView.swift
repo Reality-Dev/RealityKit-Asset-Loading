@@ -38,9 +38,9 @@ class ARSUIView: ARView {
 //                try await loadOneEntityAsync()
 //                try await loadOneModelEntityAsync()
 //                try await loadBodyTrackedEntityAsync()
-//                try await loadMultipleEntitiesAtOnceWithFileNamesAsync()
+                try await loadMultipleEntitiesAtOnceWithFileNamesAsync()
 //                try await loadMultipleEntitiesAtOnceWithURLsAsync()
-                try await loadRocketFromRealityFileAsync()
+//                try await loadRocketFromRealityFileAsync()
             } catch {
                 assertionFailure(error.localizedDescription)
             }

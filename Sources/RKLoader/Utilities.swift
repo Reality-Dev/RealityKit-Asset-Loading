@@ -37,14 +37,19 @@ public extension Publisher {
 public extension RKLoader {
     
     static func loadMany<T>(tasks: [() async throws -> T]) async throws -> [T] {
-        return try await withThrowingTaskGroup(of: T.self) { group -> [T] in
-            for task in tasks {
+        
+        return try await withThrowingTaskGroup(of: (Int, T).self) { group -> [T] in
+            for (index, task) in tasks.enumerated() {
                 group.addTask {
-                    try await task()
+                    return (index, try await task())
                 }
             }
 
-            return try await group.reduce(into: [T]()) { $0.append($1) }
+            var loadedResources = try await group.reduce(into: [(Int, T)]()) { $0.append($1) }
+            
+            loadedResources = loadedResources.sorted { $0.0 < $1.0 }
+            
+            return loadedResources.map { $0.1 }
         }
     }
     
