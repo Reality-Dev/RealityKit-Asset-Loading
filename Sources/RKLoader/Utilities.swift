@@ -16,10 +16,17 @@ public typealias RKCompletionHandler<T> = (T) -> Void
 // From Apple's "Underwater" sample project.
 // This is used to handle the errors, if any, from loading an asset.
 public extension Publisher {
-    func sink(receiveValue: @escaping ((Self.Output) -> Void),
-              errorHandler: RKErrorHandler?) -> AnyCancellable {
-        sink(
+    func sinkAndStore(receiveValue: @escaping ((Self.Output) -> Void),
+              errorHandler: RKErrorHandler?) {
+        
+        // Create a unique id separate from the AnyCancellable's own self-contained identity, so that we can cancel it within the .sink method that creates it without creating a strong reference to it.
+        let uuid = UUID()
+        
+        let cancellable = sink(
             receiveCompletion: { result in
+                
+                RKLoader.cancellables[uuid] = nil
+                
                 switch result {
                 case let .failure(error):
                     Swift.print("Error loading asset")
@@ -29,8 +36,15 @@ public extension Publisher {
                     return
                 }
             },
-            receiveValue: receiveValue
+            receiveValue: { output in
+                
+                RKLoader.cancellables[uuid] = nil
+                
+                receiveValue(output)
+            }
         )
+        
+        RKLoader.cancellables[uuid] = cancellable
     }
 }
 
@@ -57,9 +71,9 @@ public extension RKLoader {
                             completion: @escaping (([T]) -> Void),
                             errorHandler: RKErrorHandler?) {
         Publishers.MergeMany(requests).collect()
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 }
 

@@ -182,10 +182,10 @@ public extension RKLoader {
         TextureResource.generateAsync(from: cgImage,
                                       withName: resourceName,
                                       options: options)
-            .sink(
+            .sinkAndStore(
                 receiveValue: completion,
                 errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 
     static func loadTextureAsync(named resourceName: String,
@@ -197,10 +197,10 @@ public extension RKLoader {
         TextureResource.loadAsync(named: resourceName,
                                   in: bundle,
                                   options: options)
-        .sink(
+        .sinkAndStore(
             receiveValue: completion,
             errorHandler: errorHandler
-        ).store(in: &RKLoader.cancellables)
+        )
     }
 
     static func loadTextureAsync(contentsOf url: URL,
@@ -212,9 +212,9 @@ public extension RKLoader {
         TextureResource.loadAsync(contentsOf: url,
                                   withName: resourceName,
                                   options: options)
-        .sink(
+        .sinkAndStore(
             receiveValue: completion,
             errorHandler: errorHandler
-        ).store(in: &RKLoader.cancellables)
+        )
     }
 }

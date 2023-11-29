@@ -123,9 +123,9 @@ public extension RKLoader {
                                         inputMode: audioFile.inputMode,
                                         loadingStrategy: audioFile.loadingStrategy,
                                         shouldLoop: audioFile.shouldLoop)
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
         }
     }
 
@@ -142,8 +142,8 @@ public extension RKLoader {
                                            inputMode: inputMode,
                                            loadingStrategy: loadingStrategy,
                                            shouldLoop: shouldLoop)
-        .sink(receiveValue: completion,
+        .sinkAndStore(receiveValue: completion,
               errorHandler: errorHandler
-        ).store(in: &RKLoader.cancellables)
+        )
     }
 }

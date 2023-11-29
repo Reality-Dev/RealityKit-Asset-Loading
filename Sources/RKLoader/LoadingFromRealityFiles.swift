@@ -71,9 +71,9 @@ public extension RKLoader {
                                       completion: @escaping RKCompletionHandler<Entity & HasAnchoring>)
     {
         Entity.loadAnchorAsync(named: filename, in: bundle)
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 
     /// Use this function to access a particular scene from within a .reality file.
@@ -101,8 +101,8 @@ public extension RKLoader {
             return
         }
         Entity.loadAnchorAsync(contentsOf: realityFileSceneURL)
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 }

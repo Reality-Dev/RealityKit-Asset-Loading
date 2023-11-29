@@ -9,11 +9,6 @@ import Combine
 import Foundation
 import RealityKit
 
-public enum RKLoader {
-    static var cancellables = Set<AnyCancellable>()
-    
-}
-
 @available(iOS 15.0, *)
 public extension RKLoader {
     // MARK: - Async-Await
@@ -91,9 +86,9 @@ public extension RKLoader {
         }
 
         Entity.loadAsync(contentsOf: path, withName: name)
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 
     /// This loads the entity asynchronously from a file. Uses asynchronous loading to avoid stalling the main thread and freezing frames.
@@ -106,9 +101,9 @@ public extension RKLoader {
                                 errorHandler: RKErrorHandler? = nil,
                                 completion: @escaping RKCompletionHandler<Entity>) {
         Entity.loadAsync(named: name, in: bundle)
-            .sink(receiveValue: completion,
+            .sinkAndStore(receiveValue: completion,
                   errorHandler: errorHandler
-            ).store(in: &RKLoader.cancellables)
+            )
     }
 
     /// For use with loading two or more entities at a time using the URL of the file on disk. You may load as many as you would like.

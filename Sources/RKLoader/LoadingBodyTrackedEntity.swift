@@ -52,9 +52,9 @@ public extension RKLoader {
                                                errorHandler: RKErrorHandler? = nil,
                                                completion: @escaping RKCompletionHandler<BodyTrackedEntity>) {
             Entity.loadBodyTrackedAsync(named: name)
-                .sink(receiveValue: completion,
+                .sinkAndStore(receiveValue: completion,
                       errorHandler: errorHandler
-                ).store(in: &RKLoader.cancellables)
+                )
         }
 
         /// Loads a body-tracked entity from a file URL asynchronously.
@@ -70,9 +70,9 @@ public extension RKLoader {
                 return
             }
             Entity.loadBodyTrackedAsync(contentsOf: url, withName: resourceName)
-                .sink(receiveValue: completion,
+                .sinkAndStore(receiveValue: completion,
                       errorHandler: errorHandler
-                ).store(in: &RKLoader.cancellables)
+                )
         }
     }
 
