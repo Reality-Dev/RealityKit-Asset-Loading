@@ -52,6 +52,7 @@ public extension RKLoader {
     
     static func loadMany<T>(tasks: [() async throws -> T]) async throws -> [T] {
         
+        // Use enumerated() to enforce the order of the returned array; Make it match the order of the incoming tasks.
         return try await withThrowingTaskGroup(of: (Int, T).self) { group -> [T] in
             for (index, task) in tasks.enumerated() {
                 group.addTask {
