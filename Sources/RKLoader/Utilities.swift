@@ -13,9 +13,9 @@ public typealias RKErrorHandler = (Error) -> Void
 
 public typealias RKCompletionHandler<T> = (T) -> Void
 
-// From Apple's "Underwater" sample project.
+// Inspired from Apple's "Underwater" sample project. (see: "LICENSE-Apple-2" for license information).
 // This is used to handle the errors, if any, from loading an asset.
-public extension Publisher {
+internal extension Publisher {
     func sinkAndStore(receiveValue: @escaping ((Self.Output) -> Void),
               errorHandler: RKErrorHandler?) {
         
